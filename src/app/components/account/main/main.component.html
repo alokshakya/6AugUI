@@ -1,13 +1,30 @@
 <!-- <p-blockUI [blocked]="unVerified"></p-blockUI> -->
 
-<p-dialog header="Change Profile Picture" [responsive]="true" [(visible)]="changeImg">
+<!-- <p-dialog header="Change Profile Picture" [responsive]="true" [(visible)]="changeImg">
     <div class="ui-g">
         <div class="ui-g-12">
             <p-fileUpload invalidFileTypeMessageSummary="{0}: Invalid file type," [showCancelButton]="false" name="userfile" url="{{imgUploadUrl}}" accept="image/*" (onError)="messageDisplay('error','Error','Could Not Update')" previewWidth="200" (onUpload)="onUpload($event)" (onBeforeSend)="onBeforeSend($event)" maxFileSize="3000000">
             </p-fileUpload>
         </div>
     </div>
-</p-dialog>
+</p-dialog> -->
+
+<div class="modal fade" id="changeImg" tabindex="-1" role="dialog" aria-labelledby="changeImg" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Change Profile Picture</h4>
+      </div>
+      <div class="modal-body">
+        <p-fileUpload invalidFileTypeMessageSummary="{0}: Invalid file type," [showCancelButton]="false" name="userfile" url="{{imgUploadUrl}}" accept="image/*" (onError)="messageDisplay('error','Error','Could Not Update')" previewWidth="200" (onUpload)="onUpload($event)" (onBeforeSend)="onBeforeSend($event)" maxFileSize="3000000">
+            </p-fileUpload>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <!-- <p-dialog [responsive]="true" [(visible)]="unVerified" [closeOnEscape]="false" [width]="400" [closable]="false">
     <p-header>
         Verification<span class="to-right" (click)="logout()" ><a href=""><i pTooltip="Logout" class="fa fa-sign-out fa-lg"></i></a></span>
@@ -60,9 +77,9 @@
                         <h5>{{personalInfo.userInfo.firstname}} {{personalInfo.userInfo.lastname}}</h5>
                         <h5>Class {{personalInfo.classInfo.abbreviation}}</h5>
                         <h5 class="text-overflow" pTooltip="{{personalInfo.userInfo.email}}" tooltipPosition="bottom">{{personalInfo.userInfo.email}}</h5>
-                        <i  class="fa fa-square  hover" style="color:#2D353C" (click)="changeImg=true"></i>
+                        <!-- comment by Anoop <i class="fa fa-square hover" style="color:#2D353C" (click)="changeImg=true"></i> -->
 
-                        <i  class="fa fa-pencil-square hover" (click)="changeImg=true"></i>
+                        <i class="fa fa-pencil-square hover" (click)="changeImg=true" data-toggle="modal" data-target="#changeImg"></i>
                     </div>
                 </div>
                 <hr id="hr">
@@ -81,5 +98,5 @@
             <app-footer></app-footer>
         </div>
     </div>
-    <div class="layout-mask"></div>
+    <div class="layout-mask" (click)="onMenuButtonClick($event);"></div>
 </div>

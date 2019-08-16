@@ -7,13 +7,17 @@
                     <div class="ui-g center">
                         <!--*ngIf="subjectLoader">-->
                         <div class="ui-g-4 sub" *ngFor="let sub of subjectInfo.subjectList" id="{{sub | lowercase | cssId }}">
-                            <i class="icon-science icon-4x" *ngIf="sub=='Science'"></i>
-                            <i class="icon-reasoning icon-4x" *ngIf="sub=='Reasoning'"></i>
-                            <i class="icon-gk icon-4x" *ngIf="sub=='General-Knowledge'"></i>
-                            <i class="icon-english icon-4x" *ngIf="sub=='English'"></i>
-                            <i class="icon-maths icon-4x" *ngIf="sub=='Mathematics'"></i>
-                            <i class="icon-cyber icon-4x" *ngIf="sub=='Computers'"></i>
-                            <p>{{sub|uppercase}}</p>
+                            <div class="row">
+                            <div class="col-sm-3">
+                                <i class="icon-reasoning icon-4x" *ngIf="sub=='Reasoning'"></i>
+                                <i class="icon-gk icon-4x" *ngIf="sub=='General-Knowledge'"></i>
+                                <i class="icon-english icon-4x" *ngIf="sub=='English'"></i>
+                                <i class="icon-maths icon-4x" *ngIf="sub=='Mathematics'"></i>
+                                <i class="icon-cyber icon-4x" *ngIf="sub=='Computers'"></i>
+                                <i class="icon-science icon-4x" *ngIf="sub=='Science'"></i>
+                            </div>
+                            <div class="col-sm-9">{{sub|uppercase}}</div>
+                        </div>
                             <button pButton *ngIf="!subjectInfo.attemptedDemo[sub]" class="ui-button-success" (click)="redirect(sub,'demo')" label="Demo"></button>
                             <button *ngIf="!subjectInfo.subscribedSubjects[sub]" pButton class="ui-button-warning" [ngClass]="{'ui-button-danger':sub=='Science'||sub=='English'}" (click)="redirect(sub,'settings')" label="Subscribe"></button>
                             <button *ngIf="subjectInfo.subscribedSubjects[sub]" pButton class="ui-button-warning" [ngClass]="{'ui-button-danger':sub=='Science'||sub=='English'}" (click)="redirect(sub,'sample')" label="Start Test"></button>

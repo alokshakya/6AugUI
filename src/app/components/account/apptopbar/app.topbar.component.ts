@@ -56,14 +56,14 @@ export class AppTopBar implements OnInit {
             if(data){
                 this.getDate();
             }
-        })
+        });
 
-        this.router.events.subscribe(event => {
+        /*this.router.events.subscribe(event => {
             let a = event['url'];
             this.currentPage = a.split('/');
             this.currentPage.shift();
             this.currentPage.shift();
-        })
+        });*/
     }
 
     getDate(){

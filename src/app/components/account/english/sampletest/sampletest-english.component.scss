@@ -46,16 +46,6 @@
     margin-bottom: 2%;
 }
 
-.chapter {
-    font-size: 17px;
-    font-weight: normal;
-}
-
-.leftpad {
-    padding-left: 5%;
-    margin-right: 2%;
-}
-
 .low button {
     width: 70px;
     margin-right: 4px;
@@ -79,40 +69,11 @@ i:hover {
     border:none;
 }
 
-::-webkit-scrollbar {
-    width: 12px;
-}
-
-::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-    border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
-}
-#intro {
-    height: 250px;
-    overflow-x: hidden;
-    padding-right: 13px;
-    overflow-y: auto;
-}
-
-.container{
-    padding-left: 0%;
-}
-
 #subscribe {
     margin-right: 2%;
     width: 200px;
     background-color: #1D8ECD;
     border: none;
-}
-
-#dropdown {
-    margin-left: 50%;
-    height: auto;
 }
 
 .sample button {
@@ -128,15 +89,6 @@ i:hover {
     padding-left: 20%;
 }
 
-
-.chapter {
-    font-size: 17px;
-}
-
-.leftpad {
-    padding-left: 5%;
-}
-
 .rightgap {
     width: 70px;
     margin-right: 4px;
@@ -145,11 +97,6 @@ i:hover {
 .long {
     display: inline-block;
     width: 46%;
-}
-
-.container{
-    padding-left: 3%;
-    padding-right: 5%;
 }
 
 .light,.dark,.blue{

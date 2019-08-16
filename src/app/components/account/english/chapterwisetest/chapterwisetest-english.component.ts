@@ -139,6 +139,12 @@ export class ChapterwisetestEnglishComponent implements OnInit {
         }
         return false;
     }
+    checkGenerated(e) {
+        if (this.generatedChapterIds.indexOf(this.subjectInfo.englishChapters['chapters'][e]['id']) == -1) {
+            return true;
+        }
+        return false;
+    }
 
     tabClose(e) {
         this.generatedFlag = true;

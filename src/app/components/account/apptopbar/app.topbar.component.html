@@ -1,20 +1,20 @@
 <div class="topbar clearfix">
     <div class="topbar-left">
         <div class="logo">
-            <img src="assets/layout/images/logo.png" alt="Logo">
+            <img src="assets/layout/images/swastick-book-box-logo.png" alt="Swastick Book Box logo">
         </div>
+        <a id="menu-button" style="" href="#" (click)="app.onMenuButtonClick($event);menuEvent()">
+            <i class="fa fa-chevron-circle-left"></i>
+        </a>
     </div>
     <div class="topbar-right">
-        <a id="menu-button" style="margin-top:-50px" href="#" (click)="app.onMenuButtonClick($event);menuEvent()">
-                <i class="fa fa-chevron-circle-left"></i>
-            </a>
         <a id="topbar-menu-button" href="#" (click)="app.onTopbarMenuButtonClick($event)">
-                <i class="fa fa-bars"></i>
-            </a>
+            <i class="fa fa-bars fa-stroke"></i>
+        </a>
             
         <ul id="breadcrumb" *ngIf="!app.isMobile()&&personalInfo.userInfo.gender=='Male'">
-          <li [routerLink]="['/account/dashboard']"><a href="#/account"><i class="fa fa-home fa-lg"></i></a></li>
-          <li *ngIf="currentComponent[0]=='Science'"><a href="#/account/science"><i class="icon-science icon-2x"> &nbsp;</i><span> Science</span></a></li>
+          <li [routerLink]="['/account/dashboard']"><a href="#"><i class="fa fa-home fa-lg"></i></a></li>
+          <li *ngIf="currentComponent[0]=='Science'"><a href="#"><i class="icon-science icon-2x"> &nbsp;</i><span> Science</span></a></li>
           <li *ngIf="currentComponent[0]=='Computers'"><a href="#"><i class="icon-cyber icon-2x"> &nbsp;</i><span> Computers</span></a></li>
           <li *ngIf="currentComponent[0]=='Mathematics'"><a href="#"><i class="icon-maths icon-2x"> &nbsp;</i><span> Mathematics</span></a></li>
           <li *ngIf="currentComponent[0]=='General-Knowledge'"><a href="#"><i class="icon-gk icon-2x"> &nbsp;</i><span> General-Knowledge</span></a></li>
@@ -29,7 +29,8 @@
           <li *ngIf="currentComponent[1]!=null"><a href="#">{{currentComponent[1]}}</a></li>
         </ul>
 
-        <ul id="breadcrumbF" *ngIf="!app.isMobile()&&personalInfo.userInfo.gender=='Female'">
+        <!--line commet by Anoop <ul id="breadcrumbF" *ngIf="!app.isMobile()&&personalInfo.userInfo.gender=='Female'"> -->
+        <ul id="breadcrumb" *ngIf="!app.isMobile()&&personalInfo.userInfo.gender=='Female'">
           <li [routerLink]="['/account/dashboard']"><a href="#"><i class="fa fa-home fa-lg"></i></a></li>
           <li *ngIf="currentComponent[0]=='Science'"><a href="#"><i class="icon-science icon-2x"> &nbsp;</i><span> Science</span></a></li>
           <li *ngIf="currentComponent[0]=='Computers'"><a href="#"><i class="icon-cyber icon-2x"> &nbsp;</i><span> Computers</span></a></li>
@@ -47,21 +48,31 @@
         </ul>
         
         <ul class="topbar-items fadeInDown animated" [ngClass]="{'topbar-items-visible': app.topbarMenuActive}">
-            <li #profile class="profile-item" [ngClass]="{'active-top-menu':app.activeTopbarItem === profile}">
-                <a href="#" (click)="app.onTopbarItemClick($event,profile)">                            
+            <li #profile class="profile-item " [ngClass]="{'active-top-menu':app.activeTopbarItem === profile}">
+              <a class="" href="#/account/profile">
+                <!-- <a href="#" (click)="app.onTopbarItemClick($event,profile)"> -->         
+                  <span class="user-img-ico">           
                         <!-- <img class="profile-image" *ngif="{{personalInfo.userInfo.image_path==null}}" src="assets/layout/images/Profile_picture.png"> -->
                         <img class="profile-image" *ngIf="personalInfo.userInfo['image_path']==null" src="assets/layout/images/Profile_picture.png">
                         <img class="profile-image" *ngIf="personalInfo.userInfo['image_path']!=null" src="{{imgPath}}{{personalInfo.userInfo['image_path']}}?{{imgTimeStamp}}">
-
+                      </span>
                         <span class="topbar-item-name">{{personalInfo.userInfo.firstname}} {{personalInfo.userInfo.lastname}}</span>
-                    </a>
-                <ul class="poseidon-menu fadeInDown">
-                    <li role="menuitem">
-                        <a href="#/account/profile">
-                                <i class="fa fa-fw fa-user"></i>
-                                <span>Profile</span>
-                            </a>
+                      </a>
+                    <!-- </a> -->
+                    
+                <!-- <ul class="poseidon-menu fadeInDown"> -->
+                    <!-- <li role="menuitem">
+                      <a href="#/account/profile">
+                        <i class="fa fa-fw fa-user"></i>
+                        <span>Profile</span>
+                      </a>
                     </li>
+                    <li (click)="logout()" role="menuitem">
+                      <a href="">
+                          <i class="fa fa-fw fa-sign-out red-text"></i>
+                          <span >Logout</span>
+                      </a>
+                    </li> -->
                     <!--<li role="menuitem">
                             <a href="#">
                                 <i class="fa fa-fw fa-user-secret"></i>
@@ -74,20 +85,29 @@
                                 <span>Settings</span>
                             </a>
                     </li> -->
-                    <li (click)="logout()" role="menuitem">
-                        <a href="">
-                                <i class="fa fa-fw fa-sign-out red-text"></i>
-                                <span >Logout</span>
-                            </a>
-                    </li>
-                </ul>
+                    
+                <!-- </ul> -->
             </li>
-            <li #settings [ngClass]="{'active-top-menu':app.activeTopbarItem === settings}">
+            <!-- <li role="menuitem" class="">
+                <a href="#/account/profile">
+                  <i class="fa fa-fw fa-user-o"></i>
+                  <span>Profile</span>
+                </a>
+              </li> -->
+            <li #settings [ngClass]="{'active-top-menu':app.activeTopbarItem === settings}" class="hidden-xs">
                 <a href="#/account/subscribe">
                     <!--(click)="app.onTopbarItemClick($event,settings)">-->
-                    <i class="topbar-icon fa fa-shopping-cart"></i>
-                    <span class="topbar-item-name">Subscribe</span>
+                    <!-- <i class="topbar-icon fa fa-fw fa-diamond"></i>
+                    <span class="topbar-item-name">Subscribe</span> -->
+                    <i class=" fa fa-fw fa-diamond"></i>
+                    <span class="">Subscribe</span>
                 </a>
+            </li>
+            <li (click)="logout()" role="menuitem">
+              <a href="">
+                  <i class="fa fa-fw fa-power-off"></i>
+                  <span class="hidden-sm">Logout</span>
+              </a>
             </li>
         </ul>
         <!-- <ul>

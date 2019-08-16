@@ -1,5 +1,5 @@
 <div class="ui-g">
-    <div class="ui-g-12" *ngIf="!subjectInfo.subscribedSubjects['Computers']">
+  <!--  <div class="ui-g-12" *ngIf="!subjectInfo.subscribedSubjects['Computers']">
         <p-panel header="Subscribe">
             <div class="ui-g">
                 <div class="ui-g-12 text-center">
@@ -10,16 +10,44 @@
             </div>
         </p-panel>
     </div>
-    <div class="ui-g-6 ui-sm-12">
+    <div class="info-side-box">
+            <div><button class="btn ui-button-info" data-toggle="modal" data-target="#introModel"><span><i class="fa fa-exclamation-circle"></i></span></button></div>
+            <div><button class="btn ui-button-info" data-toggle="modal" data-target="#progressModal"><span><i class="fa fa-pie-chart"></i></span></button></div>
+        </div>
+<div class="modal fade" id="introModel" tabindex="-1" role="dialog" aria-labelledby="introModel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel"></h4>
+      </div>
+      <div class="modal-body">
         <p-panel header="Introduction">
             <div id="intro" [MathJax]="lang.testIntro.sampleTest"></div>
         </p-panel>
+      </div>
     </div>
-    <div class="ui-g-6 ui-sm-12">
+  </div>
+</div>
+<div class="modal fade" id="progressModal" tabindex="-1" role="dialog" aria-labelledby="progressModal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel"></h4>
+      </div>
+      <div class="modal-body">
         <p-panel header="Progress">
             <p-chart type="doughnut" [data]="sampleTestData"></p-chart>
         </p-panel>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
     </div>
+  </div>
+</div>
+
     <div class="ui-g-6 ui-sm-12">
         <p-panel>
             <p-header>Syllabus</p-header>
@@ -88,5 +116,6 @@
                 </div>
             </div>
         </p-panel>
-    </div>
+    </div> -->
+Comming soon...
 </div>

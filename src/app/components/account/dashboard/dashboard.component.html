@@ -1,387 +1,418 @@
 <!-- <p-blockUI [blocked]="true" [target]="pnl"></p-blockUI> -->
 <div class="ui-g">
-    <div class="ui-g-8 ui-sm-12 ui-md-8">
-        <div class="ui-g">
-            <div class="ui-g-12">
-                <!--SUBJECTS PANEL-->
-                <p-panel header="Subject Summary">
-                    <div class="ui-g center">
-                        <!--*ngIf="subjectLoader">-->
-                        <div class="ui-g-4 sub" *ngFor="let sub of subjectInfo.subjectList" id="{{sub | lowercase | cssId }}">
-                            <i class="icon-science icon-4x" *ngIf="sub=='Science'"></i>
-                            <i class="icon-reasoning icon-4x" *ngIf="sub=='Reasoning'"></i>
-                            <i class="icon-gk icon-4x" *ngIf="sub=='General-Knowledge'"></i>
-                            <i class="icon-english icon-4x" *ngIf="sub=='English'"></i>
-                            <i class="icon-maths icon-4x" *ngIf="sub=='Mathematics'"></i>
-                            <i class="icon-cyber icon-4x" *ngIf="sub=='Computers'"></i>
-                            <p>{{sub|uppercase}}</p>
-                            <button pButton *ngIf="!subjectInfo.attemptedDemo[sub]" class="ui-button-success" (click)="redirect(sub,'demotest')" label="Demo"></button>
-                            <button *ngIf="!subjectInfo.subscribedSubjects[sub]" pButton class="ui-button-warning" [ngClass]="{'ui-button-danger':sub=='Science'||sub=='English'}" (click)="redirect(sub,'settings')" label="Subscribe"></button>
-                            <button *ngIf="subjectInfo.subscribedSubjects[sub]" pButton class="ui-button-warning" [ngClass]="{'ui-button-danger':sub=='Science'||sub=='English'}" (click)="redirect(sub,'chapterwisetest')" label="Start Test"></button>
-                            <br>
-                        </div>
-                    </div>
-                </p-panel>
-            </div>
-            <div class="ui-g-12">
-                <!--TEST SUMMARY PANEL-->
-                <p-panel #pnl header="Test Summary">
-                    <p-tabView id="tab head">
-                        <p-tabPanel *ngFor="let sub of chTest.completeTestDetails?.generated?.subjects;let index = index;let first = first" header="{{sub.name}}" [selected]="first">
-                            <div class="ui-g text-center" *ngIf="subjectInfo.subscribedSubjects[sub.name]">
-                                <div class="ui-g-3">Chapterwise Test</div>
-                                <div class="ui-g-9">
-                                    <div class="progress hover progmob" pTooltip="Go To Chapterwise Test" (click)="redirect(sub.name,'chapterwisetest')">
-                                                <div class="progress-bar progress-bar-success" [style.width.%]="chapterwiseTest(sub['total_generated'],sub['total_tests'],sub['total_completed'])['data'][2]" role="progressbar">{{chapterwiseTest(sub['total_generated'],sub['total_tests'],sub['total_completed'])['show'][2]|round}}
-                                                </div>
-                                                <div class="progress-bar progress-bar-warning" [style.width.%]="chapterwiseTest(sub['total_generated'],sub['total_tests'],sub['total_completed'])['data'][1]" role="progressbar">{{chapterwiseTest(sub['total_generated'],sub['total_tests'],sub['total_completed'])['show'][1]|round}}
-                                                </div>
-                                                <div class="progress-bar progress-bar-danger" [style.width.%]="chapterwiseTest(sub['total_generated'],sub['total_tests'],sub['total_completed'])['data'][0]" role="progressbar">{{chapterwiseTest(sub['total_generated'],sub['total_tests'],sub['total_completed'])['show'][0]|round}}
-                                                </div>
-                                            </div>
-                                </div>
-                                <div class="ui-g-3" *ngIf="sub?.demo_test!=null">Demo Test</div>
-                                <div class="ui-g-9" *ngIf="sub?.demo_test!=null">
-                                    <div class="progress hover progmob" pTooltip="Go To Demo Test" (click)="redirect(sub.name,'demotest')">
-                                        <div *ngIf="sub['demo_test']['total_completed']==1" class="progress-bar progress-bar-success"  role="progressbar" style="width:100%">100%
-                                        </div>
-                                        <div *ngIf="sub['demo_test']['total_completed']==0" class="progress-bar progress-bar-warning" style="width:100%" role="progressbar">100%
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="ui-g-3" *ngIf="sub?.sample_test!=null">Sample Test</div>
-                                <div class="ui-g-9" *ngIf="sub?.sample_test!=null">
-                                    <div class="progress hover progmob" pTooltip="Go To Sample Test" (click)="redirect(sub.name,'sampletest')">
-                                        <div class="progress-bar progress-bar-success" [style.width.%]="mockSample(sub['sample_test']['total_completed'],true)[0]" role="progressbar">{{mockSample(sub['sample_test']['total_completed'],true)[0]}}%
-                                        </div>
-                                        <div class="progress-bar progress-bar-warning" [style.width.%]="mockSample(sub['sample_test']['total_completed'],true)[1]" role="progressbar">{{mockSample(sub['sample_test']['total_completed'],true)[1]}}%
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="ui-g-3" *ngIf="sub?.mock_test!=null">Mock Test</div>
-                                <div class="ui-g-9" *ngIf="sub?.mock_test!=null">
-                                    <div class="progress hover progmob" pTooltip="Go To Mock Test" (click)="redirect(sub.name,'mocktest')">
-                                        <div class="progress-bar progress-bar-success" [style.width.%]="mockSample(sub['mock_test']['total_completed'])[0]" role="progressbar">{{mockSample(sub['mock_test']['total_completed'])[0]}}%
-                                        </div>
-                                        <div class="progress-bar progress-bar-warning" [style.width.%]="mockSample(sub['mock_test']['total_completed'])[1]" role="progressbar">{{mockSample(sub['mock_test']['total_completed'])[1]}}%
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="ui-g-12">
-                                        <div class="ui-g">
-                                            <div class="ui-g-3 ui-sm-12"></div>
-                                            <div class="ui-g-9 ui-sm-12">
-                                                <span class="comp">Completed</span>
-                                                <span class="gen">Generated</span>
-                                                <span class="inc">Remaining</span>
-                                            </div>
-                                        </div>
-                                </div>
-                            </div>
-                            <div class="ui-g text-center" *ngIf="!subjectInfo.subscribedSubjects[sub.name]">
-                                <div class="ui-g-3">Chapterwise Test</div>
-                                <div class="ui-g-9">
-                                    <div class="progress hover progmob" (click)="redirect(sub.name,'settings')">
-                                        <div class="progress">
-                                            <div class="progress-bar grey-back" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:100%">
-                                              Subscribe Now
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="ui-g-3" *ngIf="sub?.demo_test!=null">Demo Test</div>
-                                <div class="ui-g-9" *ngIf="sub?.demo_test!=null">
-                                    <div class="progress hover progmob" (click)="redirect(sub.name,'demotest')">
-                                        <div *ngIf="sub['demo_test']['total_completed']==1" class="progress-bar progress-bar-success"  role="progressbar" style="width:100%">100%
-                                        </div>
-                                        <div *ngIf="sub['demo_test']['total_completed']==0" class="progress-bar progress-bar-warning" style="width:100%" role="progressbar">100%
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="ui-g-3">Sample Test</div>
-                                <div class="ui-g-9">
-                                    <div class="progress hover progmob" (click)="redirect(sub.name,'settings')">
-                                        <div class="progress">
-                                            <div class="progress-bar grey-back" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:100%">
-                                              Subscribe Now
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="ui-g-3">Mock Test</div>
-                                <div class="ui-g-9">
-                                <div class="progress hover progmob" pTooltip="Subject Not Subscribed" (click)="redirect(sub.name,'mocktest')">
-                                    <div class="progress hover progmob" (click)="redirect(sub.name,'settings')">
-                                        <div class="progress">
-                                            <div class="progress-bar grey-back" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:100%">
-                                              Subscribe Now
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                </div>
-                                <div class="ui-g-12">
-                                    <div class="ui-g">
-                                        <div class="ui-g-3 ui-sm-12"></div>
-                                        <div class="ui-g-9 ui-sm-12">
-                                            <span class="comp">Completed</span>
-                                            <span class="gen">Generated</span>
-                                            <span class="inc">Remaining</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- <h3>Subject Not Subscribed</h3> -->
-                                <!-- <button pButton class="ui-button-info" (click)="redirect(sub.name,'settings')" label="Subscribe"></button> -->
-                            </div>
-                        </p-tabPanel>
-                    </p-tabView>
-                </p-panel>
-            </div>
-            <div class="ui-g-12">
-                <!--RESULT SUMMARY PANEL-->
-                <p-panel header="Result Summary">
-                    <p-tabView id="tab head">
-                        <p-tabPanel *ngFor="let sub of result.completeResult?.generated?.subjects;let index = index;let first = first;" header="{{sub.name}}" [selected]="first">
-                            <div class="ui-g text-center" *ngIf="subjectInfo.subscribedSubjects[sub.name]">
-                                <!-- CHAPTERWISE BLOCK -->
-                                <div class="ui-g-3" *ngIf="(sub?.total_correct+sub?.total_marked+sub?.total_incorrect)!=0">Chapterwise Test</div>
-                                <div class="ui-g-9" *ngIf="(sub?.total_correct+sub?.total_marked+sub?.total_incorrect)!=0">
-                                    <div class="progress hover" pTooltip="Go To Result" (click)="redirect(sub.name,'result')">
-                                        
-                                        <div class="progress-bar progress-bar-success" [style.width.%]="chapterwiseResult(index)[0]" role="progressbar">{{chapterwiseResult(index)[0]|round}}
-                                        </div>
-                                        <div class="progress-bar progress-bar-warning" [style.width.%]="chapterwiseResult(index)[2]" role="progressbar">{{chapterwiseResult(index)[2]|round}}
-                                        </div>
-                                        <div class="progress-bar progress-bar-danger" [style.width.%]="chapterwiseResult(index)[1]" role="progressbar">{{chapterwiseResult(index)[1]|round}}
-                                        </div>
-                                    
-                                    </div>
-                                </div>
-
-                                <div class="ui-g-3" *ngIf="(sub?.total_correct+sub?.total_marked+sub?.total_incorrect)==0">Chapterwise Test</div>
-                                <div class="ui-g-9" *ngIf="(sub?.total_correct+sub?.total_marked+sub?.total_incorrect)==0">
-                                    <div class="progress">
-                                        <div class="progress-bar grey-back" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:100%">
-                                          No Test Attempted
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- BLOCK ENDS -->
-
-                                <!-- DEMO TEST BLOCK -->
-                                <div class="ui-g-3" *ngIf="(sub?.demo_test?.total_correct+sub?.demo_test?.total_marked+sub?.demo_test?.total_incorrect)!=0">Demo Test</div>
-                                <div class="ui-g-9" *ngIf="(sub?.demo_test?.total_correct+sub?.demo_test?.total_marked+sub?.demo_test?.total_incorrect)!=0">
-                                    <div class="progress hover" ngi  pTooltip="Go To Result" (click)="redirect(sub.name,'result')">
-                                        <div class="progress-bar progress-bar-success" [style.width.%]="mockDemoSampleResult(sub,'demo_test')[0]" role="progressbar">{{mockDemoSampleResult(sub,'demo_test')[3]}}%
-                                        </div>
-                                        <div class="progress-bar progress-bar-warning" [style.width.%]="mockDemoSampleResult(sub,'demo_test')[1]" role="progressbar">{{mockDemoSampleResult(sub,'demo_test')[4]}}%
-                                        </div>
-                                        <div class="progress-bar progress-bar-danger" [style.width.%]="mockDemoSampleResult(sub,'demo_test')[2]" role="progressbar">{{mockDemoSampleResult(sub,'demo_test')[5]}}%
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="ui-g-3" *ngIf="(sub?.demo_test?.total_correct+sub?.demo_test?.total_marked+sub?.demo_test?.total_incorrect)==0">Demo Test</div>
-                                <div class="ui-g-9" *ngIf="(sub?.demo_test?.total_correct+sub?.demo_test?.total_marked+sub?.demo_test?.total_incorrect)==0">
-                                    <div class="progress">
-                                        <div class="progress-bar grey-back" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:100%">
-                                          No Test Attempted
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- BLOCK ENDS -->
-
-                                <!-- SAMPLE TEST BLOCK STARTS -->
-                                <div class="ui-g-3" *ngIf="(sub?.sample_test?.total_correct+sub?.sample_test?.total_marked+sub?.sample_test?.total_incorrect)!=0">Sample Test</div>
-                                <div class="ui-g-9" *ngIf="(sub?.sample_test?.total_correct+sub?.sample_test?.total_marked+sub?.sample_test?.total_incorrect)!=0">
-                                    <div class="progress hover"  pTooltip="Go To Result" (click)="redirect(sub.name,'result')">
-                                        <div class="progress-bar progress-bar-success" [style.width.%]="mockDemoSampleResult(sub,'sample_test')[0]" role="progressbar">{{mockDemoSampleResult(sub,'sample_test')[3]}}%
-                                        </div>
-                                        <div class="progress-bar progress-bar-warning" [style.width.%]="mockDemoSampleResult(sub,'sample_test')[1]" role="progressbar">{{mockDemoSampleResult(sub,'sample_test')[4]}}%
-                                        </div>
-                                        <div class="progress-bar progress-bar-danger" [style.width.%]="mockDemoSampleResult(sub,'sample_test')[2]" role="progressbar">{{mockDemoSampleResult(sub,'sample_test')[5]}}%
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="ui-g-3" *ngIf="(sub?.sample_test?.total_correct+sub?.sample_test?.total_marked+sub?.sample_test?.total_incorrect)==0">Sample Test</div>
-                                <div class="ui-g-9" *ngIf="(sub?.sample_test?.total_correct+sub?.sample_test?.total_marked+sub?.sample_test?.total_incorrect)==0">
-                                    <div class="progress">
-                                        <div class="progress-bar grey-back" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:100%">
-                                          No Test Attempted
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- BLOCK ENDS -->
-
-                                <!-- MOCK TEST BLOCK STARTS -->
-                                <div class="ui-g-3" *ngIf="(sub?.mock_test?.total_correct+sub?.mock_test?.total_marked+sub?.mock_test?.total_incorrect)!=0">Mock Test</div>
-                                <div class="ui-g-9" *ngIf="(sub?.mock_test?.total_correct+sub?.mock_test?.total_marked+sub?.mock_test?.total_incorrect)!=0">
-                                    <div class="progress hover"  pTooltip="Go To Result" (click)="redirect(sub.name,'result')">
-                                        <div class="progress-bar progress-bar-success" [style.width.%]="mockDemoSampleResult(sub,'mock_test')[0]" role="progressbar">{{mockDemoSampleResult(sub,'mock_test')[3]}}%
-                                        </div>
-                                        <div class="progress-bar progress-bar-warning" [style.width.%]="mockDemoSampleResult(sub,'mock_test')[1]" role="progressbar">{{mockDemoSampleResult(sub,'mock_test')[4]}}%
-                                        </div>
-                                        <div class="progress-bar progress-bar-danger" [style.width.%]="mockDemoSampleResult(sub,'mock_test')[2]" role="progressbar">{{mockDemoSampleResult(sub,'mock_test')[5]}}%
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="ui-g-3" *ngIf="(sub?.mock_test?.total_correct+sub?.mock_test?.total_marked+sub?.mock_test?.total_incorrect)==0">Mock Test</div>
-                                <div class="ui-g-9" *ngIf="(sub?.mock_test?.total_correct+sub?.mock_test?.total_marked+sub?.mock_test?.total_incorrect)==0">
-                                    <div class="progress">
-                                        <div class="progress-bar grey-back" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:100%">
-                                          No Test Attempted
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- BLOCK ENDS -->
-                                <!-- <div class="ui-g-12" *ngIf="(sub?.mock_test?.total_correct+sub?.mock_test?.total_marked+sub?.mock_test?.total_incorrect)!=0||(sub?.sample_test?.total_correct+sub?.sample_test?.total_marked+sub?.sample_test?.total_incorrect)!=0||(sub?.demo_test?.total_correct+sub?.demo_test?.total_marked+sub?.demo_test?.total_incorrect)!=0||(sub?.total_correct+sub?.total_marked+sub?.total_incorrect)!=0"> -->
-                                <div class="ui-g-12">
-                                    <div class="ui-g">
-                                        <div class="ui-g-3 ui-sm-12"></div>
-                                        <div class="ui-g-9 ui-sm-12">
-                                            <span class="cor">Correct</span>
-                                            <span class="mark">Review</span>
-                                            <span class="inc">Wrong</span>
-                                        </div>
-                                    </div>
-                                </div>
-
-<!--                                 <div class="ui-g-12 text-center fixed-height" *ngIf="(sub?.mock_test?.total_correct+sub?.mock_test?.total_marked+sub?.mock_test?.total_incorrect)==0&&(sub?.sample_test?.total_correct+sub?.sample_test?.total_marked+sub?.sample_test?.total_incorrect)==0&&(sub?.demo_test?.total_correct+sub?.demo_test?.total_marked+sub?.demo_test?.total_incorrect)==0&&(sub?.total_correct+sub?.total_marked+sub?.total_incorrect)==0">
-                                    <div class="ui-g-3">
-                                        Chapterwise Test
-                                    </div>
-                                    <div class="ui-g-9">
-                                        <div class="progress">
-                                            <div class="progress-bar grey-back" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:100%">
-                                              No Test Attempted
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="ui-g-3">
-                                        Demo Test
-                                    </div>
-                                    <div class="ui-g-9">
-                                        <div class="progress">
-                                            <div class="progress-bar grey-back" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:100%">
-                                              No Test Attempted
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="ui-g-3">
-                                        Sample Test
-                                    </div>
-                                    <div class="ui-g-9">
-                                        <div class="progress">
-                                            <div class="progress-bar grey-back" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:100%">
-                                              No Test Attempted
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="ui-g-3">
-                                        Mock Test
-                                    </div>
-                                    <div class="ui-g-9">
-                                        <div class="progress">
-                                            <div class="progress-bar grey-back" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:100%">
-                                              No Test Attempted
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> -->
-                            </div>
-                            <div class="ui-g text-center" *ngIf="!subjectInfo.subscribedSubjects[sub.name]">
-                                    <div class="ui-g-3">
-                                        Chapterwise Test
-                                    </div>
-                                    <div class="ui-g-9">
-                                        <div class="progress">
-                                            <div class="progress-bar grey-back" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:100%">
-                                              No Test Attempted
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="ui-g-3">
-                                        Demo Test
-                                    </div>
-                                    <div class="ui-g-9">
-                                        <div class="progress">
-                                            <div class="progress-bar grey-back" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:100%">
-                                              No Test Attempted
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="ui-g-3">
-                                        Sample Test
-                                    </div>
-                                    <div class="ui-g-9">
-                                        <div class="progress">
-                                            <div class="progress-bar grey-back" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:100%">
-                                              No Test Attempted
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="ui-g-3">
-                                        Mock Test
-                                    </div>
-                                    <div class="ui-g-9">
-                                        <div class="progress">
-                                            <div class="progress-bar grey-back" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:100%">
-                                              No Test Attempted
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="ui-g-12">
-                                        <div class="ui-g">
-                                            <div class="ui-g-3 ui-sm-12"></div>
-                                            <div class="ui-g-9 ui-sm-12">
-                                                <span class="cor">Correct</span>
-                                                <span class="mark">Review</span>
-                                                <span class="inc">Wrong</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                            </div>
-                        </p-tabPanel>
-                    </p-tabView>
-                </p-panel>
-            </div>
-        </div>
-    </div>
-    <div class="ui-g-4 ui-sm-12">
-        <div class="ui-g-12">
-            <p-panel header="Notice Board">
-                <div id="notice">
-                    <div class='noticebox' *ngFor="let item of misc.notice; let i = index ">
-                        <span class="inline"><h3>Notice {{i+1}}</h3></span>
-                        <span>{{item['date_published']}}</span>
-                        <p>{{item['news']}}</p>
-                    </div>
+  <div class="ui-g-8 ui-sm-12 ui-md-8">
+    <div class="ui-g">
+      <div class="ui-g-12">
+        <!--SUBJECTS PANEL-->
+        <p-panel header="Subject Summary">
+          <div class="row">
+            <!--*ngIf="subjectLoader">-->
+            <div class="col-sm-4 col-xs-6" *ngFor="let sub of subjectInfo.subjectList" id="{{sub | lowercase | cssId }}">
+              <div class="sub">
+              <div class="row">
+                <div class="col-sm-3">
+                  <i class="icon-reasoning icon-4x" *ngIf="sub=='Reasoning'"></i>
+                  <i class="icon-maths icon-4x" *ngIf="sub=='Mathematics'"></i>
+                  <i class="icon-science icon-4x" *ngIf="sub=='Science'"></i>
+                  
+                  <i class="icon-gk icon-4x" *ngIf="sub=='General-Knowledge'"></i>
+                  <i class="icon-english icon-4x" *ngIf="sub=='English'"></i>
+                  <i class="icon-cyber icon-4x" *ngIf="sub=='Computers'"></i>
                 </div>
-            </p-panel>
-        </div>
-        <div class="ui-g-12">
-            <p-panel header="Testimonials">
-                <div id="testimonials">
-                    <div class="testbox" *ngFor="let i of misc.testimonial">
-                        <div class="ui-g">
-                            <div class="ui-g-4" *ngIf="i.imageUrl!=''"><img class="testimonialimg" src="{{imagePath}}{{i.imageUrl}}"></div>
-                            <div class="ui-g-8 to-mid">
-                                <p-rating readonly="true" [cancel]="false" [iconOffStyle]="{'font-size':'16px'}" [iconOnStyle]="{'font-size':'16px'}" [(ngModel)]="i['user_rating']"></p-rating>
-                                <p>- <em>{{i['fullname']}}</em></p>
-                            </div>
-                            <div class="ui-g-12 text-wrap">
-                                <p>{{i['text']}}</p>
-                            </div>
-                        </div>
-                    </div>
+                <div class="col-sm-9" style="display:inline-flex;height:40px;">
+                  <div style="align-items:center;display:flex;">{{sub|uppercase}}
+                  </div>
                 </div>
-            </p-panel>
-        </div>
+              </div>
+              <span *ngIf="sub=='Computers'">
+                <button pButton class="ui-button-danger" label="Coming Soon..."></button>
+              </span>  
+              <span *ngIf="sub!='Computers'">
+              <button pButton *ngIf="!subjectInfo.attemptedDemo[sub]" class="ui-button" (click)="redirect(sub,'demotest')" label="Demo"></button>
+              <button *ngIf="!subjectInfo.subscribedSubjects[sub]" pButton class="ui-button-warning" [ngClass]="{'ui-button-danger':sub=='Science'||sub=='English'}" (click)="redirect(sub,'settings')" label="Subscribe"></button>
+              <button *ngIf="subjectInfo.subscribedSubjects[sub]" pButton class="ui-button-warning" [ngClass]="{'ui-button-danger':sub=='Science'||sub=='English'}" (click)="redirect(sub,'chapterwisetest')" label="Start Test"></button>
+            </span>
+              <br>
+            </div>
+            </div>
+          </div>
+        </p-panel>
+      </div>
+      <div class="ui-g-12">
+        <!--TEST SUMMARY PANEL-->
+        <p-panel #pnl header="Test Summary">
+          <p-tabView id="tab head">
+            <p-tabPanel *ngFor="let sub of chTest.completeTestDetails?.generated?.subjects;let index = index;let first = first" header="{{sub.name}}" [selected]="first">
+
+            <span *ngIf = "sub.name =='Computers'"> 
+              Coming soon...
+            </span>  
+             <span *ngIf = "sub.name !='Computers'"> 
+              <div class="ui-g" *ngIf="subjectInfo.subscribedSubjects[sub.name]">
+                
+                <div class="col-xs-12 col-sm-3" *ngIf="sub?.demo_test!=null">Demo Test</div>
+                <div class="col-xs-12 col-sm-9 text-center" *ngIf="sub?.demo_test!=null">
+                  <div class="progress hover progmob" pTooltip="Go To Demo Test" (click)="redirect(sub.name,'demotest')">
+                    <div *ngIf="sub['demo_test']['total_completed']==1" class="progress-bar progress-bar-success"  role="progressbar" style="width:100%">100%
+                    </div>
+                    <div *ngIf="sub['demo_test']['total_completed']==0" class="progress-bar progress-bar-warning" style="width:100%" role="progressbar">100%
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xs-12 col-sm-3">Chapterwise Test</div>
+                <div class="col-xs-12 col-sm-9 text-center">
+                  <div class="progress hover progmob" pTooltip="Go To Chapterwise Test" (click)="redirect(sub.name,'chapterwisetest')">
+                    <div class="progress-bar progress-bar-success" [style.width.%]="chapterwiseTest(sub['total_generated'],sub['total_tests'],sub['total_completed'])['data'][2]" role="progressbar">{{chapterwiseTest(sub['total_generated'],sub['total_tests'],sub['total_completed'])['show'][2]|round}}
+                    </div>
+                    <div class="progress-bar progress-bar-warning" [style.width.%]="chapterwiseTest(sub['total_generated'],sub['total_tests'],sub['total_completed'])['data'][1]" role="progressbar">{{chapterwiseTest(sub['total_generated'],sub['total_tests'],sub['total_completed'])['show'][1]|round}}
+                    </div>
+                    <div class="progress-bar progress-bar-danger" [style.width.%]="chapterwiseTest(sub['total_generated'],sub['total_tests'],sub['total_completed'])['data'][0]" role="progressbar">{{chapterwiseTest(sub['total_generated'],sub['total_tests'],sub['total_completed'])['show'][0]|round}}
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xs-12 col-sm-3" *ngIf="sub?.sample_test!=null">Sample Test</div>
+                <div class="col-xs-12 col-sm-9 text-center" *ngIf="sub?.sample_test!=null">
+                  <div class="progress hover progmob" pTooltip="Go To Sample Test" (click)="redirect(sub.name,'sampletest')">
+                    <div class="progress-bar progress-bar-success" [style.width.%]="mockSample(sub['sample_test']['total_completed'],true)[0]" role="progressbar">{{mockSample(sub['sample_test']['total_completed'],true)[0]}}%
+                    </div>
+                    <div class="progress-bar progress-bar-warning" [style.width.%]="mockSample(sub['sample_test']['total_completed'],true)[1]" role="progressbar">{{mockSample(sub['sample_test']['total_completed'],true)[1]}}%
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xs-12 col-sm-3" *ngIf="sub?.mock_test!=null">Mock Test</div>
+                <div class="col-xs-12 col-sm-9 text-center" *ngIf="sub?.mock_test!=null">
+                  <div class="progress hover progmob" pTooltip="Go To Mock Test" (click)="redirect(sub.name,'mocktest')">
+                    <div class="progress-bar progress-bar-success" [style.width.%]="mockSample(sub['mock_test']['total_completed'])[0]" role="progressbar">{{mockSample(sub['mock_test']['total_completed'])[0]}}%
+                    </div>
+                    <div class="progress-bar progress-bar-warning" [style.width.%]="mockSample(sub['mock_test']['total_completed'])[1]" role="progressbar">{{mockSample(sub['mock_test']['total_completed'])[1]}}%
+                    </div>
+                  </div>
+                </div>
+                <div class="ui-g-12 ui-g-nopad">
+                  <div class="ui-g">
+                    <div class="col-xs-12">
+                      <div class="col-xs-12 col-sm-4"><span class="comp fa fa-circle"></span> Completed</div>
+                      <div class="col-xs-12 col-sm-4"><span class="gen fa fa-circle"></span> Generated</div>
+                      <div class="col-xs-12 col-sm-4"><span class="inc fa fa-circle"></span> Remaining</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="ui-g text-center" *ngIf="!subjectInfo.subscribedSubjects[sub.name]">
+                <div class="col-xs-12 col-sm-3">Chapterwise Test</div>
+                <div class="col-xs-12 col-sm-9 text-center">
+                  <div class="progress hover progmob" (click)="redirect(sub.name,'settings')">
+                    <div class="progress">
+                      <div class="progress-bar grey-back" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:100%">
+                        Subscribe Now
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xs-12 col-sm-3" *ngIf="sub?.demo_test!=null">Demo Test</div>
+                <div class="col-xs-12 col-sm-9 text-center" *ngIf="sub?.demo_test!=null">
+                  <div class="progress hover progmob" (click)="redirect(sub.name,'demotest')">
+                    <div *ngIf="sub['demo_test']['total_completed']==1" class="progress-bar progress-bar-success"  role="progressbar" style="width:100%">100%
+                    </div>
+                    <div *ngIf="sub['demo_test']['total_completed']==0" class="progress-bar progress-bar-warning" style="width:100%" role="progressbar">100%
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xs-12 col-sm-3">Sample Test</div>
+                <div class="col-xs-12 col-sm-9 text-center">
+                  <div class="progress hover progmob" (click)="redirect(sub.name,'settings')">
+                    <div class="progress">
+                      <div class="progress-bar grey-back" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:100%">
+                        Subscribe Now
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xs-12 col-sm-3">Mock Test</div>
+                <div class="col-xs-12 col-sm-9 text-center">
+                  <div class="progress hover progmob" pTooltip="Subject Not Subscribed" (click)="redirect(sub.name,'mocktest')">
+                    <div class="progress hover progmob" (click)="redirect(sub.name,'settings')">
+                      <div class="progress">
+                        <div class="progress-bar grey-back" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:100%">
+                          Subscribe Now
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="ui-g-12">
+                  <div class="ui-g">
+                    <div class="ui-sm-12">
+                      <div class="col-xs-12 col-sm-4"><span class="comp fa fa-circle"></span> Completed</div>
+                      <div class="col-xs-12 col-sm-4"><span class="gen fa fa-circle"></span> Generated</div>
+                      <div class="col-xs-12 col-sm-4"><span class="inc fa fa-circle"></span> Remaining</div>
+                    </div>
+                  </div>
+                </div>
+                <!-- <h3>Subject Not Subscribed</h3> -->
+                <!-- <button pButton class="ui-button-info" (click)="redirect(sub.name,'settings')" label="Subscribe"></button> -->
+              </div>
+            </span>
+            </p-tabPanel>
+          </p-tabView>
+        </p-panel>
+      </div>
+      <div class="ui-g-12">
+        <!--RESULT SUMMARY PANEL-->
+        <p-panel header="Result Summary">
+          <p-tabView id="tab head">
+            <p-tabPanel *ngFor="let sub of result.completeResult?.generated?.subjects;let index = index;let first = first;" header="{{sub.name}}" [selected]="first">
+              <span *ngIf = "sub.name =='Computers'"> 
+              Coming soon...
+            </span>
+            <span *ngIf = "sub.name !='Computers'"> 
+              <div class="ui-g" *ngIf="subjectInfo.subscribedSubjects[sub.name]">
+               
+
+                <!-- DEMO TEST BLOCK -->
+                <div class="col-xs-12 col-sm-3" *ngIf="(sub?.demo_test?.total_correct+sub?.demo_test?.total_marked+sub?.demo_test?.total_incorrect)!=0">Demo Test</div>
+                <div class="col-xs-12 col-sm-9 text-center" *ngIf="(sub?.demo_test?.total_correct+sub?.demo_test?.total_marked+sub?.demo_test?.total_incorrect)!=0">
+                  <div class="progress hover" ngi  pTooltip="Go To Result" (click)="redirect(sub.name,'result')">
+                    <div class="progress-bar progress-bar-success" [style.width.%]="mockDemoSampleResult(sub,'demo_test')[0]" role="progressbar">{{mockDemoSampleResult(sub,'demo_test')[3]}}%
+                    </div>
+                    <div class="progress-bar progress-bar-warning" [style.width.%]="mockDemoSampleResult(sub,'demo_test')[1]" role="progressbar">{{mockDemoSampleResult(sub,'demo_test')[4]}}%
+                    </div>
+                    <div class="progress-bar progress-bar-danger" [style.width.%]="mockDemoSampleResult(sub,'demo_test')[2]" role="progressbar">{{mockDemoSampleResult(sub,'demo_test')[5]}}%
+                    </div>
+                  </div>
+                </div>
+                
+                 <div class="col-xs-12 col-sm-3" *ngIf="(sub?.demo_test?.total_correct+sub?.demo_test?.total_marked+sub?.demo_test?.total_incorrect)==0">Demo Test</div>
+                <div class="col-xs-12 col-sm-9 text-center" *ngIf="(sub?.demo_test?.total_correct+sub?.demo_test?.total_marked+sub?.demo_test?.total_incorrect)==0">
+                  <div class="progress">
+                    <div class="progress-bar grey-back" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:100%">
+                      No Test Attempted
+                    </div>
+                  </div>
+                </div>
+                <!-- BLOCK ENDS -->
+                 <!-- CHAPTERWISE BLOCK -->
+                <div class="col-xs-12 col-sm-3" *ngIf="(sub?.total_correct+sub?.total_marked+sub?.total_incorrect)!=0">Chapterwise Test</div>
+                <div class="col-xs-12 col-sm-9 text-center" *ngIf="(sub?.total_correct+sub?.total_marked+sub?.total_incorrect)!=0">
+                  <div class="progress hover" pTooltip="Go To Result" (click)="redirect(sub.name,'result')">
+
+                    <div class="progress-bar progress-bar-success" [style.width.%]="chapterwiseResult(index)[0]" role="progressbar">{{chapterwiseResult(index)[0]|round}}
+                    </div>
+                    <div class="progress-bar progress-bar-warning" [style.width.%]="chapterwiseResult(index)[2]" role="progressbar">{{chapterwiseResult(index)[2]|round}}
+                    </div>
+                    <div class="progress-bar progress-bar-danger" [style.width.%]="chapterwiseResult(index)[1]" role="progressbar">{{chapterwiseResult(index)[1]|round}}
+                    </div>
+
+                  </div>
+                </div>
+
+                <div class="col-xs-12 col-sm-3" *ngIf="(sub?.total_correct+sub?.total_marked+sub?.total_incorrect)==0">Chapterwise Test</div>
+                <div class="col-xs-12 col-sm-9 text-center" *ngIf="(sub?.total_correct+sub?.total_marked+sub?.total_incorrect)==0">
+                  <div class="progress">
+                    <div class="progress-bar grey-back" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:100%">
+                      No Test Attempted
+                    </div>
+                  </div>
+                </div>
+                <!-- BLOCK ENDS -->
+
+               
+
+                <!-- SAMPLE TEST BLOCK STARTS -->
+                <div class="col-xs-12 col-sm-3" *ngIf="(sub?.sample_test?.total_correct+sub?.sample_test?.total_marked+sub?.sample_test?.total_incorrect)!=0">Sample Test</div>
+                <div class="col-xs-12 col-sm-9 text-center" *ngIf="(sub?.sample_test?.total_correct+sub?.sample_test?.total_marked+sub?.sample_test?.total_incorrect)!=0">
+                  <div class="progress hover"  pTooltip="Go To Result" (click)="redirect(sub.name,'result')">
+                    <div class="progress-bar progress-bar-success" [style.width.%]="mockDemoSampleResult(sub,'sample_test')[0]" role="progressbar">{{mockDemoSampleResult(sub,'sample_test')[3]}}%
+                    </div>
+                    <div class="progress-bar progress-bar-warning" [style.width.%]="mockDemoSampleResult(sub,'sample_test')[1]" role="progressbar">{{mockDemoSampleResult(sub,'sample_test')[4]}}%
+                    </div>
+                    <div class="progress-bar progress-bar-danger" [style.width.%]="mockDemoSampleResult(sub,'sample_test')[2]" role="progressbar">{{mockDemoSampleResult(sub,'sample_test')[5]}}%
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xs-12 col-sm-3" *ngIf="(sub?.sample_test?.total_correct+sub?.sample_test?.total_marked+sub?.sample_test?.total_incorrect)==0">Sample Test</div>
+                <div class="col-xs-12 col-sm-9 text-center" *ngIf="(sub?.sample_test?.total_correct+sub?.sample_test?.total_marked+sub?.sample_test?.total_incorrect)==0">
+                  <div class="progress">
+                    <div class="progress-bar grey-back" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:100%">
+                      No Test Attempted
+                    </div>
+                  </div>
+                </div>
+                <!-- BLOCK ENDS -->
+
+                <!-- MOCK TEST BLOCK STARTS -->
+                <div class="col-xs-12 col-sm-3" *ngIf="(sub?.mock_test?.total_correct+sub?.mock_test?.total_marked+sub?.mock_test?.total_incorrect)!=0">Mock Test</div>
+                <div class="col-xs-12 col-sm-9 text-center" *ngIf="(sub?.mock_test?.total_correct+sub?.mock_test?.total_marked+sub?.mock_test?.total_incorrect)!=0">
+                  <div class="progress hover"  pTooltip="Go To Result" (click)="redirect(sub.name,'result')">
+                    <div class="progress-bar progress-bar-success" [style.width.%]="mockDemoSampleResult(sub,'mock_test')[0]" role="progressbar">{{mockDemoSampleResult(sub,'mock_test')[3]}}%
+                    </div>
+                    <div class="progress-bar progress-bar-warning" [style.width.%]="mockDemoSampleResult(sub,'mock_test')[1]" role="progressbar">{{mockDemoSampleResult(sub,'mock_test')[4]}}%
+                    </div>
+                    <div class="progress-bar progress-bar-danger" [style.width.%]="mockDemoSampleResult(sub,'mock_test')[2]" role="progressbar">{{mockDemoSampleResult(sub,'mock_test')[5]}}%
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xs-12 col-sm-3" *ngIf="(sub?.mock_test?.total_correct+sub?.mock_test?.total_marked+sub?.mock_test?.total_incorrect)==0">Mock Test</div>
+                <div class="col-xs-12 col-sm-9 text-center" *ngIf="(sub?.mock_test?.total_correct+sub?.mock_test?.total_marked+sub?.mock_test?.total_incorrect)==0">
+                  <div class="progress">
+                    <div class="progress-bar grey-back" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:100%">
+                      No Test Attempted
+                    </div>
+                  </div>
+                </div>
+                <!-- BLOCK ENDS -->
+                <!-- <div class="ui-g-12" *ngIf="(sub?.mock_test?.total_correct+sub?.mock_test?.total_marked+sub?.mock_test?.total_incorrect)!=0||(sub?.sample_test?.total_correct+sub?.sample_test?.total_marked+sub?.sample_test?.total_incorrect)!=0||(sub?.demo_test?.total_correct+sub?.demo_test?.total_marked+sub?.demo_test?.total_incorrect)!=0||(sub?.total_correct+sub?.total_marked+sub?.total_incorrect)!=0"> -->
+                  <div class="ui-g-12">
+                    <div class="ui-g">
+                        <div class="col-xs-12 col-sm-4"><span class="comp fa fa-check"> </span> Correct</div>
+                        <div class="col-xs-12 col-sm-4"><span class="gen fa fa-history"> </span> Review</div>
+                        <div class="col-xs-12 col-sm-4"><span class="inc fa fa-times"> </span> Wrong</div>
+                        <!-- <span class="cor"></span>
+                        <span class="mark"></span>
+                        <span class="inc"></span> -->
+                      
+                    </div>
+                  </div>
+
+<!--              <div class="ui-g-12 text-center fixed-height" *ngIf="(sub?.mock_test?.total_correct+sub?.mock_test?.total_marked+sub?.mock_test?.total_incorrect)==0&&(sub?.sample_test?.total_correct+sub?.sample_test?.total_marked+sub?.sample_test?.total_incorrect)==0&&(sub?.demo_test?.total_correct+sub?.demo_test?.total_marked+sub?.demo_test?.total_incorrect)==0&&(sub?.total_correct+sub?.total_marked+sub?.total_incorrect)==0">
+                  <div class="ui-g-3">
+                      Chapterwise Test
+                  </div>
+                  <div class="ui-g-9">
+                      <div class="progress">
+                          <div class="progress-bar grey-back" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:100%">
+                            No Test Attempted
+                          </div>
+                      </div>
+                  </div>
+
+                  <div class="ui-g-3">
+                      Demo Test
+                  </div>
+                  <div class="ui-g-9">
+                      <div class="progress">
+                          <div class="progress-bar grey-back" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:100%">
+                            No Test Attempted
+                          </div>
+                      </div>
+                  </div>
+
+                  <div class="ui-g-3">
+                      Sample Test
+                  </div>
+                  <div class="ui-g-9">
+                      <div class="progress">
+                          <div class="progress-bar grey-back" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:100%">
+                            No Test Attempted
+                          </div>
+                      </div>
+                  </div>
+
+                  <div class="ui-g-3">
+                      Mock Test
+                  </div>
+                  <div class="ui-g-9">
+                      <div class="progress">
+                          <div class="progress-bar grey-back" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:100%">
+                            No Test Attempted
+                          </div>
+                      </div>
+                  </div>
+                </div> -->
+              </div>
+            <!--   <div class="ui-g" *ngIf="!subjectInfo.subscribedSubjects[sub.name]">
+                
+
+                <div class="col-xs-12 col-sm-3">
+                  Demo Test
+                </div>
+                <div class="col-xs-12 col-sm-9 text-center">
+                  <div class="progress">
+                    <div class="progress-bar grey-back" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:100%">
+                      No Test Attempted
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-xs-12 col-sm-3">
+                  Chapterwise Test
+                </div>
+                <div class="col-xs-12 col-sm-9 text-center">
+                  <div class="progress">
+                    <div class="progress-bar grey-back" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:100%">
+                      No Test Attempted
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-xs-12 col-sm-3">
+                  Sample Test
+                </div>
+                <div class="col-xs-12 col-sm-9 text-center">
+                  <div class="progress">
+                    <div class="progress-bar grey-back" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:100%">
+                      No Test Attempted
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-xs-12 col-sm-3">
+                  Mock Test
+                </div>
+                <div class="col-xs-12 col-sm-9 text-center">
+                  <div class="progress">
+                    <div class="progress-bar grey-back" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:100%">
+                      No Test Attempted
+                    </div>
+                  </div>
+                </div>
+                <div class="ui-g-12">
+                  <div class="ui-g">
+                    <div class="ui-g-2 ui-sm-12"></div>
+                    <div class="ui-g-10 ui-sm-12">
+                      <span class="cor">Correct</span>
+                      <span class="mark">Review</span>
+                      <span class="inc">Wrong</span>
+                    </div>
+                  </div>
+                </div>
+              </div> -->
+            </span>
+            </p-tabPanel>
+          </p-tabView>
+        </p-panel>
+      </div>
     </div>
+  </div>
+  <div class="ui-g-4 ui-sm-12 noticebox-wrapper">
+    <div class="ui-g-12">
+      <p-panel header="Notice Board">
+        <div id="notice">
+          <div class='noticebox' *ngFor="let item of misc.notice; let i = index ">
+            <span class="inline"><h3>Notice {{i+1}}</h3></span>
+            <span>{{item['date_published']}}</span>
+            <p>{{item['news']}}</p>
+          </div>
+        </div>
+      </p-panel>
+    </div>
+    <div class="ui-g-12 testimonial-wrapper">
+      <p-panel header="Testimonials">
+        <div id="testimonials">
+          <div class="testbox" *ngFor="let i of misc.testimonial">
+            <div class="ui-g">
+              <div class="ui-g-4" *ngIf="i.imageUrl!=''"><img class="testimonialimg" src="{{imagePath}}{{i.imageUrl}}"></div>
+              <div class="ui-g-8 to-mid">
+                <p-rating readonly="true" [cancel]="false" [iconOffStyle]="{'font-size':'16px'}" [iconOnStyle]="{'font-size':'16px'}" [(ngModel)]="i['user_rating']"></p-rating>
+                <p>- <em>{{i['fullname']}}</em></p>
+              </div>
+              <div class="ui-g-12 text-wrap">
+                <p>{{i['text']}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </p-panel>
+    </div>
+  </div>
 </div>

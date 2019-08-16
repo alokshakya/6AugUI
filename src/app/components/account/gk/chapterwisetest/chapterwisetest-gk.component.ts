@@ -134,6 +134,12 @@ export class ChapterwisetestGkComponent implements OnInit {
         }
         return false;
     }
+    checkGenerated(e) {
+        if (this.generatedChapterIds.indexOf(this.subjectInfo.gkChapters['chapters'][e]['id']) == -1) {
+            return true;
+        }
+        return false;
+    }
 
     tabClose(e) {
         this.generatedFlag = true;

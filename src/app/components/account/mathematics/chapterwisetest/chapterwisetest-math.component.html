@@ -12,17 +12,37 @@
                 </div>
             </p-panel>
         </div>
-        <div class="ui-g-6 ui-sm-12 ui-lg-6">
-            <p-panel header="Introduction">
-                <div id="intro" [MathJax]="lang.testIntro.chapterwiseTest">
-                </div>
-            </p-panel>
+        <div class="info-side-box">
+            <div><button class="btn ui-button-info" data-toggle="modal" data-target="#introModel"><span><i class="fa fa-exclamation-circle"></i></span></button></div>
+            <div><button class="btn ui-button-info" data-toggle="modal" data-target="#progressModal"><span><i class="fa fa-pie-chart"></i></span></button></div>
         </div>
-        <div class="ui-g-6 ui-sm-12 ui-lg-6">
-            <p-panel header="Progress">
-                <p-chart type="doughnut" [data]="chapterwiseTestData"></p-chart>
-            </p-panel>
-        </div>
+<div class="modal fade" id="introModel" tabindex="-1" role="dialog" aria-labelledby="introModel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Introduction</h4>
+      </div>
+      <div class="modal-body">
+        <div id="intro" [MathJax]="lang.testIntro.chapterwiseTest"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="progressModal" tabindex="-1" role="dialog" aria-labelledby="progressModal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Progress</h4>
+      </div>
+      <div class="modal-body">
+        <p-chart type="doughnut" [data]="chapterwiseTestData"></p-chart>
+      </div>
+    </div>
+  </div>
+</div>
+
         <div class="ui-g-6 ui-sm-12 ui-lg-6">
             <p-panel>
                 <p-header>
@@ -34,14 +54,16 @@
                 <p-accordion (onOpen)="tabOpen($event)" (onClose)="tabClose($event)">
                     <div class="ui-g">
                         <div class="ui-g-12">
-                            <p-accordionTab *ngFor="let data of subjectInfo.mathChapters['chapters']">
+                            <p-accordionTab *ngFor="let data of subjectInfo.mathChapters['chapters'];  let i = index">
                                 <p-header>
-                                    <span class="chapter">{{data.name}}</span>
+                                    <span class="chapter" [ngClass]="checkGenerated(i) ? '': 'chapter_generated'">{{data.name}}</span>
                                 </p-header>
                                 <div class="ui-g">
-                                    <div class="ui-g-12" *ngFor="let topic of data['topics']">
-                                        <span class="">{{topic.name}}<br></span>
-                                    </div>
+                                    <ol>
+                                        <li class="ui-g-12" *ngFor="let topic of data['topics']">
+                                            <span class="">{{topic.name}}<br></span>
+                                        </li>
+                                    </ol>
                                 </div>
                             </p-accordionTab>
                         </div>
@@ -70,13 +92,13 @@
       </p-panel>
     </div>-->
         <div class="ui-g-6 ui-sm-12">
-            <p-panel header="Generated">
+            <p-panel header="Generated Test">
                 <p-accordion (onOpen)="onTabOpen($event)" (onClose)="currentTabIndex=null">
                     <div class="ui-g">
                         <div class="ui-g-12" *ngIf="subjectInfo.subscribedSubjects['Mathematics']">
                             <p-accordionTab *ngFor="let data of generatedChapters; let k=index">
                                 <p-header>
-                                            <span class="chapter">{{data?.name}}</span>
+                                    <span class="chapter">{{data?.name}}</span>
                                 </p-header>
                                 <!-- <div class="ui-g">
                                     <div class="ui-g-12 ui-sm-12" *ngFor="let test of data['tests'];let i = index">

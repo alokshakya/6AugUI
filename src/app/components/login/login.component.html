@@ -1,8 +1,8 @@
 <p-growl [value]="message" life="4000"></p-growl>
 <div class="container">
     <div class="logo">
-        <!--Olympiadbox logo-->
-        <a href="http://olympiadbox.com"><img src="../../assets/layout/images/Olympiadbox-logo.png" id="oblogo" height="100px" width="100px"></a>
+        <!--Swastick Book Box logo-->
+        <a href="#"><img src="../../assets/layout/images/swastick-book-box-logo-icon.png" alt="Swastick Book Box logo" id="oblogo"  width="60px"></a>
     </div>
     <div class=" module form-module" *ngIf="!loginRegToggle" [@fadeInOut]>
         <div class="toggle" pTooltip=" Login" (click)="conditionalDisplay();reset();clearFlags()" *ngIf="loginForgotToggle||verifyForgotToggle">
@@ -15,17 +15,17 @@
         <div *ngIf="!loginForgotToggle; then login else forgot"></div>
     </div>
     <!--Registration Box-->
-    <div class="form-module register" style="border-color:#2BBF61" *ngIf="loginRegToggle" [@fadeInOut]>
-        <div class="toggle" style="background-color:#2BBF61" pTooltip=" Login" (click)="loginRegToggle=!loginRegToggle;reset();clearFlags()">
+    <div class="form-module register" style="border-color:#24346d" *ngIf="loginRegToggle" [@fadeInOut]>
+        <div class="toggle" style="background-color:#24346d" pTooltip=" Login" (click)="loginRegToggle=!loginRegToggle;reset();clearFlags()">
             <i class="fa fa-sign-in fa-lg"></i>
         </div>
         <div *ngIf="!regVerifyToggle; then reg else verify"></div>
     </div>
-    <div class="ui-g fill">
-        <div class="ui-g-12 ui-sm-12 footer">
-            Copyright <i class="fa fa-copyright"></i> Olympiadbox. All rights reserved
+    
+        <div class="ui-g-12 ui-sm-12 footer text-center">
+            Copyright <i class="fa fa-copyright"></i> Swastick Book Box. All rights reserved
         </div>
-    </div>
+    
     <ng-template #login>
         <div class="form">
             <div class="text-center">
@@ -42,22 +42,26 @@
                 <br>
                 <input type="password" name="password" value="" autocomplete="off" #password="ngModel" [(ngModel)]="userLoginCreds.password" pInputText placeholder="Password" pattern="^[^\s]{6,}" required/>
                 <br>
-                <button *ngIf="!spinner" class="ui-button-info" pButton (click)="signIn()" [disabled]="password.errors||email.errors" type="submit" label="Login"></button>
-                <button *ngIf="spinner" class="ui-button-info" pButton icon="fa fa-circle-o-notch fa-spin fa-forward" type="submit"></button>
-                <br>
-                <br>
-                <span id="lostpassword"><a (click)="forgotPassword()">Forgot Password?</a></span><br>
+                <div class="text-center">
+                    <button *ngIf="!spinner" class="ui-button-info" pButton (click)="signIn()" [disabled]="password.errors||email.errors" type="submit" label="Login"></button>
+                    <button *ngIf="spinner" class="ui-button-info" pButton icon="fa fa-circle-o-notch fa-spin fa-forward" type="submit"></button>
+                    <br>
+                    <span id="lostpassword"><a (click)="forgotPassword()">Forgot Password?</a></span><br>
+                </div>
             </form>
-            <div class="ui-g" id="optional">
+            <div class="ui-g text-center" id="optional">
                 <div class="ui-g-5">
                     <hr>
                 </div>
                 <div class="ui-g-2">
-                    <h4>Or</h4></div>
+                    <h4>Or</h4>
+                </div>
                 <div class="ui-g-5">
                     <hr>
                 </div>
-                <button pButton (click)="loginRegToggle=!loginRegToggle;reset();clearFlags()" class="ui-button-success" type="button" label="Register"></button>
+                <div class="ui-g-12">
+                    <button pButton (click)="loginRegToggle=!loginRegToggle;reset();clearFlags()" class="ui-button-success" type="button" label="Register"></button>
+                </div>
             </div>
             <div *ngIf="false" class="ui-g" id="optional">
                 <div class="ui-g-5">

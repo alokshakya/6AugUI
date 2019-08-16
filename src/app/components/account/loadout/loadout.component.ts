@@ -43,11 +43,10 @@ export class LoadoutComponent implements OnInit {
                 let previousRoute = sessionStorage.getItem('route');
                 this.changeTheme(this.personalInfo.userInfo['gender']);
                 if(previousRoute!=null){
-                    this.router.navigate([previousRoute]);
                     // if(this.personalInfo.userInfo.email_verified==1&&this.personalInfo.userInfo.mobile_verified==1){
-                        // setTimeout(()=>{
-                        //     this.router.navigate([previousRoute]);
-                        // },)
+                        setTimeout(()=>{
+                            this.router.navigate([previousRoute]);
+                        },800)
                     // }
                     // else this.router.navigate(['account']);
                 }
@@ -88,7 +87,8 @@ export class LoadoutComponent implements OnInit {
     changeTheme(gender) {
         let theme = {
             Male:'ob',
-            Female:'pink'
+            Female:'ob'
+            //comment by Anoop Female:'pink'
         }
         let themeLink: HTMLLinkElement = <HTMLLinkElement> document.getElementById('theme-css');
         let layoutLink: HTMLLinkElement = <HTMLLinkElement> document.getElementById('layout-css');

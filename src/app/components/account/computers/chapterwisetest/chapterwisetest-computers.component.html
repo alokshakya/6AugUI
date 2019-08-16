@@ -1,6 +1,6 @@
 <p-growl [(value)]="generateMsg"></p-growl>
 <div class="fluid">
-    <div class="ui-g">
+<!--    <div class="ui-g">
         <div class="ui-g-12" *ngIf="!subjectInfo.subscribedSubjects['Computers']">
             <p-panel header="Subscribe">
                 <div class="ui-g">
@@ -12,16 +12,44 @@
                 </div>
             </p-panel>
         </div>
-        <div class="ui-g-6 ui-sm-12 ui-lg-6">
-            <p-panel header="Introduction">
-                <div id="intro" [MathJax]="lang.testIntro.chapterwiseTest"></div>
-            </p-panel>
+        <div class="info-side-box">
+            <div><button class="btn ui-button-info" data-toggle="modal" data-target="#introModel"><span><i class="fa fa-exclamation-circle"></i></span></button></div>
+            <div><button class="btn ui-button-info" data-toggle="modal" data-target="#progressModal"><span><i class="fa fa-pie-chart"></i></span></button></div>
         </div>
-        <div class="ui-g-6 ui-sm-12 ui-lg-6">
-            <p-panel header="Progress">
+<div class="modal fade" id="introModel" tabindex="-1" role="dialog" aria-labelledby="introModel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel"></h4>
+      </div>
+      <div class="modal-body">
+        <p-panel header="Introduction">
+            <div id="intro" [MathJax]="lang.testIntro.chapterwiseTest"></div>
+        </p-panel>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="progressModal" tabindex="-1" role="dialog" aria-labelledby="progressModal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel"></h4>
+      </div>
+      <div class="modal-body">
+        <p-panel header="Progress">
                 <p-chart type="doughnut" [data]="chapterwiseTestData"></p-chart>
             </p-panel>
-        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+       
         <div class="ui-g-6 ui-sm-12 ui-lg-6">
             <p-panel>
                 <p-header>
@@ -33,14 +61,16 @@
                 <p-accordion (onOpen)="tabOpen($event)" (onClose)="tabClose($event)">
                     <div class="ui-g">
                         <div class="ui-g-12">
-                            <p-accordionTab *ngFor="let data of subjectInfo.computerChapters['chapters']">
+                            <p-accordionTab *ngFor="let data of subjectInfo.computerChapters['chapters'];  let i = index">
                                 <p-header>
-                                    <span class="chapter">{{data.name}}</span>
+                                    <span class="chapter" [ngClass]="checkGenerated(i) ? '': 'chapter_generated'">{{data.name}}</span>
                                 </p-header>
                                 <div class="ui-g">
-                                    <div class="ui-g-12" *ngFor="let topic of data['topics']">
+                                    <ol>
+                                    <li class="ui-g-12" *ngFor="let topic of data['topics']">
                                         <span class="">{{topic.name}}<br></span>
-                                    </div>
+                                    </li>
+                                    </ol>
                                 </div>
                             </p-accordionTab>
                         </div>
@@ -49,25 +79,7 @@
                 <p-growl [(value)]="generateMsg" [life]="3000"></p-growl>
             </p-panel>
         </div>
-        <!--<div class="ui-g-6">
-       <p-panel header="Generated">
-            <p-accordion>
-              <div class="ui-g">
-                <div class="ui-g-12">
-                  <p-accordionTab  *ngFor="let data of result.chapterwiseTestDetails|keys">
-                    <p-header><span class="chapter">{{data.key}}</span></p-header>
-                    <div class="ui-g">
-                      <div class="ui-g-12"  *ngFor="let test of data.value|keys">
-                        <span class="leftpad">{{test.key}}</span>
-                        <span class="low"><button label="{{test.value}}" [ngClass]="{'ui-button-success':test.value!='Resume'||test.value!='Start', 'ui-button-danger':test.value=='Start', 'ui-button-warning':test.value=='Resume'}" type="button" pButton></button><button pButton type="button" style="width:40px;" pTooltip="Retake {{test.key}}" tooltipPosition="right" icon="fa fa-refresh fa-spin fa-fw" *ngIf=" !(test.value=='Start'|| test.value=='Resume') "></button></span>
-                      </div>
-                    </div>
-                  </p-accordionTab>
-                </div>
-              </div>
-            </p-accordion>
-      </p-panel>
-    </div>-->
+       
         <div class="ui-g-6 ui-sm-12">
             <p-panel header="Generated">
                 <p-accordion (onOpen)="onTabOpen($event)" (onClose)="currentTabIndex=null">
@@ -77,31 +89,7 @@
                                 <p-header>
                                     <span class="chapter">{{data?.name}}</span>
                                 </p-header>
-                                <!-- <div class="ui-g">
-                                    <div class="ui-g-12 ui-sm-12" *ngFor="let test of data['tests'];let i = index">
-                                        <span class="leftpad">Test <span [ngClass]="shade(i)">{{i+1}}</span></span>
-                                        <span *ngIf="test.attempted==0" class="low">
-                                            <button *ngIf="spinner2!=test.id" class="ui-button-danger" (click)="startTest(test.id,data.id,test.attempted,test.completed,data.name)" label="Start" [disabled]="spinner2!=null" type="button" pButton></button>
-                                            <button *ngIf="spinner2==test.id" class="ui-button-danger" icon="fa fa-circle-o-notch fa-spin fa-forward" [disabled]="false" type="button" pButton></button>
-                                        </span>
-
-                                        <span *ngIf="test.completed==1" class="low">
-                                            <button *ngIf="spinner2!=test.id" class="ui-button-danger" (click)="startTest(test.id,data.id,test.attempted,test.completed,data.name)" label="Start" [disabled]="spinner2!=null||test.attempted>=3" type="button" pButton></button>
-                                            <button *ngIf="spinner2==test.id" class="ui-button-danger" icon="fa fa-circle-o-notch fa-spin fa-forward" type="button" pButton></button>
-                                        </span>
-
-                                        <span *ngIf="test.completed==0&&test.attempted!=0" class="low">
-                                            <button *ngIf="spinner2!=test.id" class="ui-button-warning" (click)="startTest(test.id,data.id,test.attempted,test.completed,data.name)" label="Resume" [disabled]="spinner2!=null" type="button" pButton></button>
-                                            <button *ngIf="spinner2==test.id" class="ui-button-warning" icon="fa fa-circle-o-notch fa-spin fa-forward" type="button" pButton></button>
-                                        </span>
-                                        <span class="low">
-                                            <span class="round" *ngIf="test.attempted==0">0</span>
-
-                                            <span class="round" *ngIf="test.attempted!=0&&test.completed==0">{{test.attempted-1}}</span>
-                                            <span class="round" *ngIf="test.attempted!=0&&test.completed==1">{{test.attempted}}</span>
-                                        </span>
-                                    </div>
-                                </div> -->
+                              
                                 <div class="ui-g">
                                     <div class="ui-g-12 ui-sm-12 container">
                                         <div class="table-responsive">
@@ -156,5 +144,6 @@
                 </p-accordion>
             </p-panel>
         </div>
-    </div>
+    </div>-->
+    Comming soon...
 </div>

@@ -105,6 +105,11 @@ export class MasterHttpService {
             .map((resp: Response) => resp.json())
     }
 
+    reportIssueInQUes(requestBody) {
+        return this.http.post(constants.OLYMPIADBOX_INSTANCE_URL + '/test/raiseanissue', requestBody, { headers: this.queryHeaders })
+            .map((resp: Response) => resp.json())
+    }
+
     // ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     // data service implementation

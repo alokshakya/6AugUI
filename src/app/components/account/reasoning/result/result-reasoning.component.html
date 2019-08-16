@@ -4,17 +4,17 @@
             <p-selectButton [options]="tests" (onChange)="onTabChange($event)" [(ngModel)]="selectedTestType"></p-selectButton>
         </div>
     </div>
-    <div class="ui-g-12" *ngIf="selectedTestType=='c'">
-        <div class="ui-g">
-            <div class="ui-g-12">
+    <div class="ui-g" *ngIf="selectedTestType=='c'">
+        <div class="">
+            <div class="">
                 <p-panel header="Summary">
                     <div class="ui-g">
                         <div class="ui-g-3">
                             <div class="ui-g card overview-box overview-box-1 blue-back">
-                                <div class="ui-g-3">
+                                <div class="ui-g-3 hidden-xs">
                                     <i class="fa fa-thumbs-o-up fa-3x"></i>
                                 </div>
-                                <div class="ui-g-9">
+                                <div class="ui-g-9 ui-xs-12">
                                     <span class="number">{{result.reasoning.total_correct+result.reasoning.total_marked+result.reasoning.total_incorrect}}</span>
                                     <br> Total Attempted
                                 </div>
@@ -22,10 +22,10 @@
                         </div>
                         <div class="ui-g-3">
                             <div class="ui-g card overview-box overview-box-1 green-back">
-                                <div class="ui-g-3">
+                                <div class="ui-g-3 hidden-xs">
                                     <i class="fa fa-smile-o fa-3x"></i>
                                 </div>
-                                <div class="ui-g-9">
+                                <div class="ui-g-9 ui-xs-12">
                                     <span class="number">{{result.reasoning.total_correct}}</span>
                                     <br> Correct Answers
                                 </div>
@@ -33,10 +33,10 @@
                         </div>
                         <div class="ui-g-3">
                             <div class="ui-g card overview-box overview-box-1 red-back">
-                                <div class="ui-g-3">
+                                <div class="ui-g-3 hidden-xs">
                                     <i class="fa fa-frown-o fa-3x"></i>
                                 </div>
-                                <div class="ui-g-9">
+                                <div class="ui-g-9 ui-xs-12">
                                     <span class="number">{{result.reasoning.total_incorrect}}</span>
                                     <br> Wrong Answers
                                 </div>
@@ -44,10 +44,10 @@
                         </div>
                         <div class="ui-g-3">
                             <div class="ui-g card overview-box overview-box-1 orange-back">
-                                <div class="ui-g-3">
+                                <div class="ui-g-3 hidden-xs">
                                     <i class="fa fa-pencil-square-o fa-3x"></i>
                                 </div>
-                                <div class="ui-g-9">
+                                <div class="ui-g-9 ui-xs-12">
                                     <span class="number">{{result.reasoning.total_marked}}</span>
                                     <br> Marked Answers
                                 </div>
@@ -56,9 +56,9 @@
                     </div>
                 </p-panel>
             </div>
-            <div class="ui-g-7">
-                <div class="ui-g">
-                    <div class="ui-g-12">
+            <div class="ui-g-7 ui-sm-12">
+                <div class="">
+                    <div class="">
                         <p-panel header="Select Chapter">
                             <p-dataTable [value]="chapterArray" (onRowUnselect)="onChapterUnselect()" (onRowSelect)="selectChapter($event)" [responsive]="true" selectionMode="single" dataKey="name" [(selection)]="selectedChapter">
                                 <p-column selectionMode="single" [style]="{'width':'8%'}"></p-column>
@@ -66,7 +66,7 @@
                             </p-dataTable>
                         </p-panel>
                     </div>
-                    <div class="ui-g-12" *ngIf="selectedChapter!=null">
+                    <div class="" *ngIf="selectedChapter!=null">
                         <p-panel header="Attempted Test Summary">
                             <p-dataTable [value]="testArray2" (onRowSelect)="selectTest($event)" (onHeaderCheckboxToggle)="selectTest($event)" (onRowUnselect)="selectTest($event)" [responsive]="true" selectionMode="multiple" dataKey="id" [(selection)]="selectedTest2">
                                 <p-column selectionMode="multiple" [style]="{'width':'10%'}"></p-column>
@@ -101,21 +101,21 @@
                             </p-dataTable>
                         </p-panel>
                     </div>
-                    <div class="ui-g-12" *ngIf="isTestSelected&&selectedChapter!=null">
+                    <div class="" *ngIf="isTestSelected&&selectedChapter!=null">
                         <p-panel header="Test Wise Graph">
                             <p-chart type="bar" [options]="options2" [data]="testwiseGraph"></p-chart>
                         </p-panel>
                     </div>
                 </div>
             </div>
-            <div class="ui-g-5">
-                <div class="ui-g">
-                    <div class="ui-g-12">
+            <div class="ui-g-5 ui-sm-12">
+                <div class="">
+                    <div class="">
                         <p-panel header="Chapterwise Graph">
                             <p-chart type="bar" [options]="ChapterwiseGraphOptions" [data]="chapterwiseGraph"></p-chart>
                         </p-panel>
                     </div>
-                    <div class="ui-g-12" *ngIf="selectedTest!=null&&isTestSelected&&selectedChapter!=null">
+                    <div class="" *ngIf="selectedTest!=null&&isTestSelected&&selectedChapter!=null">
                         <p-panel header="Result Analysis">
                             <div class="ui-g">
                                 <div class="ui-g-12 text-center" *ngIf="selectItem!=null">
@@ -203,17 +203,17 @@
             </div>
         </div>
     </div>
-    <div class="ui-g-12" *ngIf="selectedTestType=='d'">
-        <div class="ui-g">
-            <div class="ui-g-12">
+    <div class="ui-g" *ngIf="selectedTestType=='d'">
+        <div class="">
+            <div class="">
                 <p-panel header="Summary">
                     <div class="ui-g">
                         <div class="ui-g-3">
                             <div class="ui-g card overview-box overview-box-1 blue-back">
-                                <div class="ui-g-3">
+                                <div class="ui-g-3 hidden-xs">
                                     <i class="fa fa-thumbs-o-up fa-3x"></i>
                                 </div>
-                                <div class="ui-g-9">
+                                <div class="ui-g-9 ui-xs-12">
                                     <span class="number">{{demoTestObject['total_attempted']}}</span>
                                     <br> Total Attempted
                                 </div>
@@ -221,10 +221,10 @@
                         </div>
                         <div class="ui-g-3">
                             <div class="ui-g card overview-box overview-box-1 green-back">
-                                <div class="ui-g-3">
+                                <div class="ui-g-3 hidden-xs">
                                     <i class="fa fa-smile-o fa-3x"></i>
                                 </div>
-                                <div class="ui-g-9">
+                                <div class="ui-g-9 ui-xs-12">
                                     <span class="number">{{demoTestObject['total_correct']}}</span>
                                     <br> Correct Answers
                                 </div>
@@ -232,10 +232,10 @@
                         </div>
                         <div class="ui-g-3">
                             <div class="ui-g card overview-box overview-box-1 red-back">
-                                <div class="ui-g-3">
+                                <div class="ui-g-3 hidden-xs">
                                     <i class="fa fa-frown-o fa-3x"></i>
                                 </div>
-                                <div class="ui-g-9">
+                                <div class="ui-g-9 ui-xs-12">
                                     <span class="number">{{demoTestObject['total_incorrect']}}</span>
                                     <br> Wrong Answers
                                 </div>
@@ -243,10 +243,10 @@
                         </div>
                         <div class="ui-g-3">
                             <div class="ui-g card overview-box overview-box-1 orange-back">
-                                <div class="ui-g-3">
+                                <div class="ui-g-3 hidden-xs">
                                     <i class="fa fa-pencil-square-o fa-3x"></i>
                                 </div>
-                                <div class="ui-g-9">
+                                <div class="ui-g-9 ui-xs-12">
                                     <span class="number">{{demoTestObject['total_marked']}}</span>
                                     <br> Marked Answers
                                 </div>
@@ -257,18 +257,18 @@
             </div>
             <div class="ui-g-12">
                 <div class="ui-g">
-                    <div class="ui-g-12" *ngIf="false">
+                    <div class="" *ngIf="false">
                         <p-panel header="Test-Wise Graph">
                             <p-chart type="bar" [options]="ChapterwiseGraphOptions" [data]="demoTestGraph"></p-chart>
                         </p-panel>
                     </div>
-                    <div class="ui-g-12" *ngIf="selectedTest!=null">
+                    <div class="" *ngIf="selectedTest!=null">
                         <p-panel header="Result Analysis">
                             <div class="ui-g">
                                 <!-- <div class="ui-g-12 text-center" *ngIf="selectItem!=null">
                                     <p-selectButton [options]="selectItem" (onOptionClick)="chooseAttempt($event)" [(ngModel)]="selectedAttempt"></p-selectButton>
                                 </div> -->
-                                <div class="ui-g-6 container">
+                                <div class="ui-g-6 ui-sm-12 container">
                                     <div class="table-responsive">
                                         <table class="table table-bordered">
                                             <thead>
@@ -309,7 +309,7 @@
                                         </table>
                                     </div>
                                 </div>
-                                <div class="ui-g-6" *ngIf="this.selectedAttemptObject!=null">
+                                <div class="ui-g-6 ui-sm-12" *ngIf="this.selectedAttemptObject!=null">
                                     <div class="table-responsive">
                                         <table class="table table-bordered">
                                             <thead>

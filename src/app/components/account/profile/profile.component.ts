@@ -386,7 +386,8 @@ export class ProfileComponent implements OnInit, ComponentCanDeactivate {
     changeTheme(gender) {
         let theme = {
             Male:'ob',
-            Female:'pink'
+            Female:'ob'
+            //comment by Anoop Female:'pink'
         }
         let themeLink: HTMLLinkElement = <HTMLLinkElement> document.getElementById('theme-css');
         let layoutLink: HTMLLinkElement = <HTMLLinkElement> document.getElementById('layout-css');

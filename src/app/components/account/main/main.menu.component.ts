@@ -29,61 +29,32 @@ export class AppMenuComponent implements OnInit {
             { label: 'Dashboard', icon: 'fa fa-home', routerLink: ['dashboard'] },
             { label: 'Subscribe', icon: 'fa fa-pencil-square-o', routerLink: ['subscribe'] },
             {
-                label: 'Computers', icon: 'icon-cyber',
+                label: 'Reasoning', icon: 'icon-reasoning',
                 items: [{
                     label: 'Demo Test',
                     icon: 'fa fa-circle-o',
-                    routerLink: ['computers/demotest']
+                    routerLink: ['reasoning/demotest']
                 },
                 {
                     label: 'Chapterwise Test',
                     icon: 'fa fa-circle-o',
-                    routerLink: ['computers/chapterwisetest']
+                    routerLink: ['reasoning/chapterwisetest']
                 },
                 {
                     label: 'Sample Test',
                     icon: 'fa fa-circle-o',
-                    routerLink: ['computers/sampletest']
+                    routerLink: ['reasoning/sampletest']
                 },
                 {
                     label: 'Mock Test',
                     icon: 'fa fa-circle-o',
-                    routerLink: ['computers/mocktest']
+                    routerLink: ['reasoning/mocktest']
                 },
                 {
                     label: 'Result',
                     icon: 'fa fa-circle-o',
-                    routerLink: ['computers/result']
+                    routerLink: ['reasoning/result']
                 }
-                ]
-            },
-            {
-                label: 'Science', icon: 'icon-science',
-                items: [{
-                    label: 'Demo Test',
-                    icon: 'fa fa-circle-o',
-                    routerLink: ['science/demotest']
-                },
-                {
-                    label: 'Chapterwise Test',
-                    icon: 'fa fa-circle-o',
-                    routerLink: ['science/chapterwisetest']
-                },
-                {
-                    label: 'Sample Test',
-                    icon: 'fa fa-circle-o',
-                    routerLink: ['science/sampletest']
-                },
-                {
-                    label: 'Mock Test',
-                    icon: 'fa fa-circle-o',
-                    routerLink: ['science/mocktest']
-                },
-                {
-                    label: 'Result',
-                    icon: 'fa fa-circle-o',
-                    routerLink: ['science/result']
-                },
                 ]
             },
             {
@@ -115,6 +86,37 @@ export class AppMenuComponent implements OnInit {
                 },
                 ]
             },
+            
+            {
+                label: 'Science', icon: 'icon-science',
+                items: [{
+                    label: 'Demo Test',
+                    icon: 'fa fa-circle-o',
+                    routerLink: ['science/demotest']
+                },
+                {
+                    label: 'Chapterwise Test',
+                    icon: 'fa fa-circle-o',
+                    routerLink: ['science/chapterwisetest']
+                },
+                {
+                    label: 'Sample Test',
+                    icon: 'fa fa-circle-o',
+                    routerLink: ['science/sampletest']
+                },
+                {
+                    label: 'Mock Test',
+                    icon: 'fa fa-circle-o',
+                    routerLink: ['science/mocktest']
+                },
+                {
+                    label: 'Result',
+                    icon: 'fa fa-circle-o',
+                    routerLink: ['science/result']
+                },
+                ]
+            },
+            
             {
                 label: 'General-Knowledge', icon: 'icon-gk',
                 items: [{
@@ -174,24 +176,35 @@ export class AppMenuComponent implements OnInit {
                 ]
             },
             {
-                label: 'Reasoning', icon: 'icon-reasoning',
+                label: 'Computers', icon: 'icon-cyber',
                 items: [{
                     label: 'Demo Test',
                     icon: 'fa fa-circle-o',
-                    routerLink: ['reasoning/demotest']
+                    routerLink: ['computers/demotest']
                 },
                 {
                     label: 'Chapterwise Test',
                     icon: 'fa fa-circle-o',
-                    routerLink: ['reasoning/chapterwisetest']
+                    routerLink: ['computers/chapterwisetest']
+                },
+                {
+                    label: 'Sample Test',
+                    icon: 'fa fa-circle-o',
+                    routerLink: ['computers/sampletest']
+                },
+                {
+                    label: 'Mock Test',
+                    icon: 'fa fa-circle-o',
+                    routerLink: ['computers/mocktest']
                 },
                 {
                     label: 'Result',
                     icon: 'fa fa-circle-o',
-                    routerLink: ['reasoning/result']
+                    routerLink: ['computers/result']
                 }
                 ]
             },
+            
             { 
                 label: 'Support',
                 icon: 'fa fa-question-circle',

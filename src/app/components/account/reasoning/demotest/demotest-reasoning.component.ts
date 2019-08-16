@@ -81,7 +81,9 @@ export class DemotestReasoningComponent implements OnInit {
 
     ngOnInit() {
         this.testCountObject = {
-            chapterwiseTest:this.chapterwiseTest.reasoning['total_tests']
+            chapterwiseTest:this.chapterwiseTest.reasoning['total_tests'],
+            sampleTest:10,
+            mockTest:3
         }
         this.growlMsg = [];
         this.growlMsg.push(language.growlResponse.warning);

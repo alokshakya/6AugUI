@@ -1,5 +1,5 @@
 <div class="ui-g">
-    <div class="ui-g-12">
+   <!-- <div class="ui-g-12">
         <div class="text-center">
             <p-selectButton [options]="tests" (onChange)="onTabChange($event)" [(ngModel)]="selectedTestType"></p-selectButton>
         </div>
@@ -11,10 +11,10 @@
                     <div class="ui-g">
                         <div class="ui-g-3">
                             <div class="ui-g card overview-box overview-box-1 blue-back">
-                                <div class="ui-g-3">
+                                <div class="ui-g-3 hidden-xs">
                                     <i class="fa fa-thumbs-o-up fa-3x"></i>
                                 </div>
-                                <div class="ui-g-9">
+                                <div class="ui-g-9 ui-xs-12">
                                     <span class="number">{{result.computers.total_correct+result.computers.total_marked+result.computers.total_incorrect}}</span>
                                     <br> Total Attempted
                                 </div>
@@ -22,10 +22,10 @@
                         </div>
                         <div class="ui-g-3">
                             <div class="ui-g card overview-box overview-box-1 green-back">
-                                <div class="ui-g-3">
+                                <div class="ui-g-3 hidden-xs">
                                     <i class="fa fa-smile-o fa-3x"></i>
                                 </div>
-                                <div class="ui-g-9">
+                                <div class="ui-g-9 ui-xs-12">
                                     <span class="number">{{result.computers.total_correct}}</span>
                                     <br> Correct Answers
                                 </div>
@@ -33,10 +33,10 @@
                         </div>
                         <div class="ui-g-3">
                             <div class="ui-g card overview-box overview-box-1 red-back">
-                                <div class="ui-g-3">
+                                <div class="ui-g-3 hidden-xs">
                                     <i class="fa fa-frown-o fa-3x"></i>
                                 </div>
-                                <div class="ui-g-9">
+                                <div class="ui-g-9 ui-xs-12">
                                     <span class="number">{{result.computers.total_incorrect}}</span>
                                     <br> Wrong Answers
                                 </div>
@@ -44,10 +44,10 @@
                         </div>
                         <div class="ui-g-3">
                             <div class="ui-g card overview-box overview-box-1 orange-back">
-                                <div class="ui-g-3">
+                                <div class="ui-g-3 hidden-xs">
                                     <i class="fa fa-pencil-square-o fa-3x"></i>
                                 </div>
-                                <div class="ui-g-9">
+                                <div class="ui-g-9 ui-xs-12">
                                     <span class="number">{{result.computers.total_marked}}</span>
                                     <br> Marked Answers
                                 </div>
@@ -56,7 +56,7 @@
                     </div>
                 </p-panel>
             </div>
-            <div class="ui-g-7">
+            <div class="ui-g-7 ui-sm-12">
                 <div class="ui-g">
                     <div class="ui-g-12">
                         <p-panel header="Select Chapter">
@@ -108,7 +108,7 @@
                     </div>
                 </div>
             </div>
-            <div class="ui-g-5">
+            <div class="ui-g-5 ui-sm-12">
                 <div class="ui-g">
                     <div class="ui-g-12">
                         <p-panel header="Chapterwise Graph">
@@ -464,7 +464,7 @@
                                                 <span class="theme-text"><strong>Total</strong></span>
                                             </ng-template>
                                         </p-column>
-                                        <!-- <p-column [style]="{'text-align':'left'}" footer="{{mockTestObject['attempts']}}"></p-column> -->
+
                                         <p-column [style]="{'text-align':'left'}" footer="{{mockTestObject['total_correct']}}"></p-column>
                                         <p-column [style]="{'text-align':'left'}" footer="{{mockTestObject['total_incorrect']}}"></p-column>
                                         <p-column [style]="{'text-align':'left'}" footer="{{mockTestObject['total_marked']}}"></p-column>
@@ -635,9 +635,6 @@
                     <div class="ui-g-12" *ngIf="selectedTest!=null">
                         <p-panel header="Result Analysis">
                             <div class="ui-g">
-                                <!-- <div class="ui-g-12 text-center" *ngIf="selectItem!=null">
-                                    <p-selectButton [options]="selectItem" (onOptionClick)="chooseAttempt($event)" [(ngModel)]="selectedAttempt"></p-selectButton>
-                                </div> -->
                                 <div class="ui-g-6 container">
                                     <div class="table-responsive">
                                         <table class="table table-bordered">
@@ -721,6 +718,6 @@
                 </div>
             </div>
         </div>
-    </div>
-
+    </div> -->
+Comming soon...
 </div>

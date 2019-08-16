@@ -39,6 +39,9 @@ import { SampletestGkComponent } from './gk/sampletest/sampletest-gk.component';
 import { ChapterwisetestReasoningComponent } from './reasoning/chapterwisetest/chapterwisetest-reasoning.component';
 import { DemotestReasoningComponent } from './reasoning/demotest/demotest-reasoning.component';
 import { ResultReasoningComponent } from './reasoning/result/result-reasoning.component';
+import { SampletestReasoningComponent } from './reasoning/sampletest/sampletest-reasoning.component';
+import { MocktestReasoningComponent } from './reasoning/mocktest/mocktest-reasoning.component';
+
 
 import { TestComponent } from '../test/test.component';
 import { ProfileComponent } from './profile/profile.component';
@@ -91,6 +94,8 @@ export const AccountRoutes: Routes = [
             { path: 'reasoning/demotest', component: DemotestReasoningComponent },
             { path: 'reasoning/chapterwisetest', component: ChapterwisetestReasoningComponent },
             { path: 'reasoning/result', component: ResultReasoningComponent },
+            { path: 'reasoning/sampletest', component: SampletestReasoningComponent },
+            { path: 'reasoning/mocktest', component: MocktestReasoningComponent },
             
             { path: 'profile', component: ProfileComponent,canDeactivate:[TestDeactivate]},
 

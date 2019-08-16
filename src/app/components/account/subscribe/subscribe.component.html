@@ -27,20 +27,20 @@
                     </div>
                     <div class="ui-g-12 ui-sm-12">
                         <div class="ui-g">
-                            <div class="ui-g-8 ui-sm-8">
+                            <div class="ui-g-8 ui-sm-12 dis-coupon">
                                 <label>Enter Coupon Code &nbsp;
                                     <input type="text" maxlength="30" placeholder="Coupon Code" [(ngModel)]="coupon" pInputText> &nbsp;
                                 </label>
                                 <button type="button" *ngIf="!spinner2" style="width:60px" class="ui-button-info" (click)="applyCoupon()" [disabled]="coupon==null||coupon==''||selectedPackage[0]==null" pButton label="Apply"></button>
-                                <button style="width:60px" class="ui-button-info" icon="fa fa-circle-o-notch fa-spin fa-forward" *ngIf="spinner2" pButton></button><br>
+                                <button style="width:60px" class="ui-button-info" icon="fa fa-circle-o-notch fa-spin fa-forward" *ngIf="spinner2" pButton></button>
                             </div>
-                            <div class="ui-g-4 ui-sm-4">
+                            <div class="ui-g-4 ui-sm-12">
                                 <label class="left-margin" *ngIf="!discountApplied">Total Amount: &#x20B9; {{sum}} </label>
                                 <label class="left-margin" *ngIf="discountApplied">Amount: &#x20B9; {{sum}} </label>
                                 <label class="left-margin" *ngIf="discountApplied">Discount: {{discount}} % ({{appliedCoupon}})</label>
                                 <label class="left-margin green-text" *ngIf="discountApplied">Total Amount: &#x20B9;{{discountedAmount}}</label>
                             </div>
-                            <div class="ui-g-12 text-center ui-sm-12">
+                            <div class="ui-g-10 text-right ui-xs-12">
                                 <button type="button" *ngIf="!spinner" class="ui-button-success" (click)="pay()" [disabled]="selectedPackage[0]==null" pButton label="Pay Now"></button>
                                 <button type="button" *ngIf="spinner" pButton class="ui-button-success fifty" icon="fa fa-circle-o-notch fa-spin fa-forward"></button>
                             </div>
@@ -69,12 +69,12 @@
                 <p-dataTable alwaysShowPaginator="false" [value]="misc.paymentData" [responsive]="true">
                     <p-column [style]="{'text-align':'left'}" *ngFor="let i of col2" header="{{i.header}}" field="{{i.field}}">
                         <ng-template let-col let-data="rowData" *ngIf="i.header=='Invoice'" header = "Invoice" pTemplate="body">
-                                <i (click)="download(data['invoice_url'])" pTooltip="Download Invoice" tooltipPosition="right" style="color:#BC1900" class="fa fa-file-pdf-o fa-lg"></i>
+                                <span (click)="download(data['invoice_url'])" pTooltip="Download Invoice" tooltipPosition="right"><i style="color:#BC1900" class="fa fa-file-pdf-o fa-lg"></i> Download</span>
                         </ng-template>
                     </p-column>
-                </p-dataTable><br>
-                <p><strong>Note: </strong>Password to open invoice pdf is <strong>first 4 letters of your firstname + last four digits of your mobile number</strong></p>
-                <br>
+                </p-dataTable>
+                <!-- <p><strong>Note: </strong>Password to open invoice pdf is <strong>first 4 letters of your firstname + last four digits of your mobile number</strong></p> -->
+                
             </p-panel>
         </div>
     </div>

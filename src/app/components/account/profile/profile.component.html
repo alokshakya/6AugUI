@@ -31,11 +31,17 @@
 </p-dialog>
 <div class="ui-g">
     <p-growl [(value)]="growlmsg"></p-growl>
-    <div class="ui-g-12">
+    <div class="ui-g-12 profile-menu">
         <p-tabView [activeIndex]="misc.profileTabIndex">
             <p-tabPanel header="Basic Info" [disabled]="editSchool||editPassword||editTestimonial" leftIcon="fa-user">
                 <div class="container">
                     <div class="row">
+                        <div class="col-md-4 col-xs-12 mob pull-right">
+                            <button type="button" *ngIf="!editBasic" pButton class="ui-button-info" label="Edit" (click)="editBasicInfo()"></button>
+                            <button type="button" *ngIf="editBasic&&!spinner" [disabled]="invalidName()[0]||invalidName()[1]||invalidName()[2]||invalidName()[3]||invalidName()[4]||checkMobile(true)" pButton class="ui-button-success" label="Save" (click)="saveBasicInfo()"></button>
+                            <button type="button" style="width:52px" *ngIf="editBasic&&spinner" icon="fa fa-circle-o-notch fa-spin fa-forward" pButton class="ui-button-success"></button>
+                            <button type="button" *ngIf="editBasic" pButton class="ui-button-danger" label="Cancel" (click)="cancelBasicInfo()"></button>
+                        </div>
                         <div class="col-md-4 col-xs-12 userinfo">
                             <h4><i class="fa fa-user"></i> Name</h4>
                             <p><span class="userdetails" *ngIf="!editBasic">{{personalInfo.userInfo.firstname}} {{personalInfo.userInfo.lastname}}</span>
@@ -49,12 +55,7 @@
                             <h4><i class="fa fa-envelope"></i> Email</h4>
                             <p><span class="userdetails">&nbsp;&nbsp;{{personalInfo.userInfo.email}}</span></p>
                         </div>
-                        <div class="col-md-4 col-xs-12 mob">
-                            <button type="button" *ngIf="!editBasic" pButton class="ui-button-info" label="Edit" (click)="editBasicInfo()"></button>
-                            <button type="button" *ngIf="editBasic&&!spinner" [disabled]="invalidName()[0]||invalidName()[1]||invalidName()[2]||invalidName()[3]||invalidName()[4]||checkMobile(true)" pButton class="ui-button-success" label="Save" (click)="saveBasicInfo()"></button>
-                            <button type="button" style="width:52px" *ngIf="editBasic&&spinner" icon="fa fa-circle-o-notch fa-spin fa-forward" pButton class="ui-button-success"></button>
-                            <button type="button" *ngIf="editBasic" pButton class="ui-button-danger" label="Cancel" (click)="cancelBasicInfo()"></button>
-                        </div>
+                        
                     </div>
                     <div class="row">
                         <div class="col-md-4 col-xs-12 userinfo">
@@ -128,6 +129,12 @@
             <p-tabPanel header="School Info" leftIcon="fa-graduation-cap" [disabled]="editBasic||editPassword||editTestimonial">
                 <div class="container">
                     <div class="row">
+                        <div class="col-md-4 col-xs-12 mob pull-right">
+                            <button type="button" *ngIf="!editSchool" pButton class="ui-button-info" label="Edit" (click)="editSchoolInfo()"></button>
+                            <button type="button" *ngIf="editSchool&&!spinner" pButton class="ui-button-success" label="Save" [disabled]="couponCode==''||couponCode==null" (click)="saveSchoolInfo()"></button>
+                            <button type="button" style="width:52px" *ngIf="editSchool&&spinner" icon="fa fa-circle-o-notch fa-spin fa-forward" pButton class="ui-button-success"></button>
+                            <button type="button" *ngIf="editSchool" pButton class="ui-button-danger" label="Cancel" (click)="cancelSchoolInfo()"></button>
+                        </div>
                         <div class="col-md-4 userinfo col-xs-12">
                             <h4><i class="fa fa-sticky-note-o"></i> School Code </h4>
                             <p><span *ngIf="!editSchool" class="userdetails schoolcode"> {{personalInfo.schoolInfo['school_code']}}</span> &nbsp;
@@ -138,12 +145,7 @@
                             <h4><i class="fa fa-user"></i> Contact Person</h4>
                             <p><span class="userdetails"> &nbsp;{{personalInfo.schoolInfo['contact_person']}}</span> &nbsp;</p>
                         </div>
-                        <div class="col-md-4 col-xs-12">
-                            <button type="button" *ngIf="!editSchool" pButton class="ui-button-info" label="Edit" (click)="editSchoolInfo()"></button>
-                            <button type="button" *ngIf="editSchool&&!spinner" pButton class="ui-button-success" label="Save" [disabled]="couponCode==''||couponCode==null" (click)="saveSchoolInfo()"></button>
-                            <button type="button" style="width:52px" *ngIf="editSchool&&spinner" icon="fa fa-circle-o-notch fa-spin fa-forward" pButton class="ui-button-success"></button>
-                            <button type="button" *ngIf="editSchool" pButton class="ui-button-danger" label="Cancel" (click)="cancelSchoolInfo()"></button>
-                        </div>
+                        
                     </div>
                     <div class="row">
                         <div class="col-md-4 col-xs-12 userinfo">
@@ -178,7 +180,7 @@
                 </div>
             </p-tabPanel>
             <p-tabPanel header="Change Password" [disabled]="editSchool||editBasic||editTestimonial" leftIcon="fa-key">
-                <div class="container long">
+                <div class="container">
                     <div class="row">
                         <div class="col-md-4 userinfo col-xs-9">
                             <h4><i class="fa fa-unlock"></i> Old Password</h4>
@@ -210,7 +212,7 @@
                 </div>
             </p-tabPanel>
             <p-tabPanel header="Add Testimonial" [disabled]="editSchool||editBasic||editPassword" leftIcon="fa-pencil">
-                <div class="container box">
+                <div class=" box">
                     <div class="row">
                         <div class="col-md-4 col-xs-12">
                             <p-panel header="Previous Testimonials">
@@ -236,7 +238,7 @@
                                         <div>
                                             <button pButton *ngIf="!spinner" [disabled]="testimonial==null||testimonial==''" label="Add Testimonial" (click)="addTestimonial()" class="ui-button-success"></button>
                                             <button pButton *ngIf="spinner" icon="fa fa-circle-o-notch fa-spin fa-forward" style="width:125px" class="ui-button-success"></button>
-                                            <button pButton label="Not Now" [disabled]="testimonial==null||testimonial==''" (click)="cancelTestimonial()" class="ui-button-danger"></button>
+                                            <button pButton label="Not Now" [disabled]="testimonial==null||testimonial==''" (click)="cancelTestimonial()" class=""></button>
                                         </div>
                                     </div>
                                     <div class="col-md-5 col-xs-12">
@@ -247,7 +249,7 @@
                                         <span class="point"><i class="fa fa-check fa-lg"></i>Never Abuse.</span>
                                         <br>
                                         <hr>
-                                        <h4>Rate OlympiadBox</h4>
+                                        <h4>Rate Swastick Book Box</h4>
                                         <p-rating [cancel]="false" [(ngModel)]="rating"></p-rating>
                                     </div>
                                 </div>
@@ -258,7 +260,7 @@
                 </div>
             </p-tabPanel>
             <p-tabPanel [disabled]="editSchool||editBasic||editPassword||editTestimonial" header="Add Achievements" leftIcon="fa-plus">
-                <div class="ui-g p">
+                <div class=" p">
                     <p-panel header="Tell us about your Achievement">
                         <div class="ui-g">
                             <div class="ui-g-4 ui-sm-12">
@@ -295,10 +297,10 @@
                                 <p-checkbox name="declaration" value="dec1" [(ngModel)]="dec"></p-checkbox>I, parent of the above mentioned kid confirm that the information provided here is true.
                                 <br>
                                 <br>
-                                <p-checkbox name="declaration" value="dec2" [(ngModel)]="dec"></p-checkbox>I allow OlympiadBox to display the photograph and comment to online and offline media.
+                                <p-checkbox name="declaration" value="dec2" [(ngModel)]="dec"></p-checkbox>I allow Swastick Book Box to display the photograph and comment to online and offline media.
                                 <br>
                                 <br>
-                                <div class="text-center">
+                                <div class="">
                                     <p-captcha #captcha siteKey="6LfVJUUUAAAAAGWXhy14h_D8Iw4AydIVKwhObjKb" (onResponse)="showResponse($event)"></p-captcha><br>
                                     <button pButton *ngIf="!spinner" style="width:145px" class="ui-button-success" [disabled]="dec[0]==null||dec[1]==null||achievement==null||achievement==''||selectedExam==null||selectedClass==null||examCity==null||examCity==''||rollNo==null||rollNo==''||!isHuman" label="Add Achievement" (click)="addAchievement()"></button>
                                     <button pButton *ngIf="spinner" style="width:145px" class="ui-button-success" icon="fa fa-circle-o-notch fa-spin fa-forward"></button>

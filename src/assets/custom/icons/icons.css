@@ -1,12 +1,12 @@
 @charset "UTF-8";
 
 @font-face {
-  font-family: "olympiadbox";
-  src:url("fonts/olympiadbox.eot");
-  src:url("fonts/olympiadbox.eot?#iefix") format("embedded-opentype"),
-    url("fonts/olympiadbox.woff") format("woff"),
-    url("fonts/olympiadbox.ttf") format("truetype"),
-    url("fonts/olympiadbox.svg#olympiadbox") format("svg");
+  font-family: "sbb";
+  src:url("fonts/sbb.eot");
+  src:url("fonts/sbb.eot?#iefix") format("embedded-opentype"),
+    url("fonts/sbb.woff") format("woff"),
+    url("fonts/sbb.ttf") format("truetype"),
+    url("fonts/sbb.svg#sbb") format("svg");
   font-weight: normal;
   font-style: normal;
 
@@ -14,7 +14,7 @@
 }
 
 [data-icon]:before {
-  font-family: "olympiadbox" !important;
+  font-family: "sbb" !important;
   content: attr(data-icon);
   font-style: normal !important;
   font-weight: normal !important;
@@ -28,7 +28,7 @@
 
 [class^="icon-"]:before,
 [class*=" icon-"]:before {
-  font-family: "olympiadbox" !important;
+  font-family: "sbb" !important;
   font-style: normal !important;
   font-weight: normal !important;
   font-variant: normal !important;

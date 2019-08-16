@@ -10,17 +10,37 @@
             </div>
         </p-panel>
     </div>
-    <div class="ui-g-6 ui-sm-12">
-        <p-panel header="Introduction">
-            <div id="intro" [MathJax]="lang.testIntro.mockTest">
-                </div>
-        </p-panel>
+    <div class="info-side-box">
+            <div><button class="btn ui-button-info" data-toggle="modal" data-target="#introModel"><span><i class="fa fa-exclamation-circle"></i></span></button></div>
+            <div><button class="btn ui-button-info" data-toggle="modal" data-target="#progressModal"><span><i class="fa fa-pie-chart"></i></span></button></div>
+        </div>
+<div class="modal fade" id="introModel" tabindex="-1" role="dialog" aria-labelledby="introModel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Introduction</h4>
+      </div>
+      <div class="modal-body">
+        <div id="intro" [MathJax]="lang.testIntro.mockTest"></div>
+      </div>
     </div>
-    <div class="ui-g-6 ui-sm-12">
-        <p-panel header="Progress">
-            <p-chart type="doughnut" [data]="mockTestData"></p-chart>
-        </p-panel>
+  </div>
+</div>
+<div class="modal fade" id="progressModal" tabindex="-1" role="dialog" aria-labelledby="progressModal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Progress</h4>
+      </div>
+      <div class="modal-body">
+        <p-chart type="doughnut" [data]="mockTestData"></p-chart>
+      </div>
     </div>
+  </div>
+</div>
+
     <div class="ui-g-6 ui-sm-12">
         <p-panel>
             <p-header>Syllabus</p-header>
@@ -37,8 +57,8 @@
     </div>
     <div class="ui-g-6 ui-sm-12">
         <p-panel>
-            <p-header><span class="rightmargin">Mock Test</span>
-                <p-dropdown id="dropdown" [disabled]="true" [options]="examPattern"></p-dropdown>
+            <p-header><span class="">Mock Test</span>
+
             </p-header>
             <div class="ui-g">
                 <div class="ui-g-12 ui-sm-12 container" *ngIf="subjectInfo.subscribedSubjects['Mathematics']&&test.math?.mock_test!=null">
@@ -47,8 +67,8 @@
                         <thead>
                           <tr>
                             <th style="width:27%">Mock Test</th>
-                            <th>Slot 1</th>
-                            <th>Slot 2</th>
+                            <th>Slot</th>
+                            <th>Action</th>
                           </tr>
                         </thead>
                         <tbody>

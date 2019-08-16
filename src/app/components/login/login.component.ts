@@ -21,12 +21,12 @@ import { EventService } from '../../services/event.service'
             state('*', style({ 'overflow-y': 'hidden' })),
             state('void', style({ 'overflow-y': 'hidden' })),
             transition('* => void', [
-                style({ height: '*' }),
-                animate(250, style({ height: 0 }))
+                style({ opacity: '1' }),
+                animate(250, style({ opacity: 0 }))
             ]),
             transition('void => *', [
-                style({ height: '0' }),
-                animate(250, style({ height: '*' }))
+                style({ opacity: '0' }),
+                animate(250, style({ opacity: '1' }))
             ]),
         ]
         )
@@ -343,7 +343,7 @@ export class LoginComponent implements OnInit {
                     this.spinner = false;
                 } else {
                     this.message = [];
-                    this.message.push({ severity: 'error', summary: 'Invalid Credentials', detail: 'Sign Up with OlympiadBox' });
+                    this.message.push({ severity: 'error', summary: 'Invalid Credentials', detail: 'Sign Up with Swastick Book Box' });
                     this.spinner = false;
                 }
             },
